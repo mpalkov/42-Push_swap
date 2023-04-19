@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lists_main.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mpalkov <mpalkov@student.42barcelo>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/19 13:51:49 by mpalkov           #+#    #+#             */
+/*   Updated: 2023/04/19 17:19:50 by mpalkov          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 t_node	*ft_lst_getlast(t_node *stack)
@@ -26,6 +38,7 @@ int	ft_stadd_last(t_node **stack, int data)
 		*stack = new;
 		return (1);
 	}
+	new->prev = last;
 	last->next = new;
 	return (1);
 }
@@ -54,11 +67,19 @@ t_node	*ft_init_a(int argc, char** argv)
 int	main(void)
 {
 	int		argc = 6;
-	char	*argv[] = {"push.c", "3", "1", "7", "2", "4"};
+	char	*argv[] = {"push.c", "1", "2", "3", "7", "4"};
 
 	/* INITCHECKS
 	 * 1 - check no duplicate numbers present & isdigit for all numbers
 	 * 		before atoi.
+	 * 2 - check that all the strings are valid int values.
+	 * 		// long nbr2check = atoi(argv[2]);
+	 * 		// char *str2check = itoa(nbr2check);
+	 * 		// if (strncmp(argv[2], str2check) == 0)
+	 * 		//  	ok;
+	 * 		// else
+	 * 		//		error, argv[2] is not a valid int;
+	 * 		
 	 */
 
 	t_node	*sta;
@@ -71,5 +92,8 @@ int	main(void)
 		return (-1);
 		// ERROR CREATING STACK A
 // CONTUNAR AQUI
+//
+// TESTING
+	ft_sa(sta);
 	return (0);
 }
