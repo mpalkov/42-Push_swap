@@ -188,7 +188,10 @@ int	ft_ps_initialize(int argc, char **argv, t_vars *data)
 	if (ft_fillarr(data->sortedarray, data->arrayln, argv) == -1)
 		return (-1);
 	ft_selection_sort(data->sortedarray, data->arrayln);
-	
+	data->sta = ft_init_stack(data->argc, data->argv);
+	if (!data->sta)
+		return (-1);
+		//malloc problems.
 	return(1);
 }
 

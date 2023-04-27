@@ -36,6 +36,7 @@ typedef	struct	s_vars
 	size_t	chunks_b;
 	int		argc;
 	char	**argv;
+	int		errno;
 }				t_vars;
 
 typedef struct s_chunk
