@@ -34,7 +34,8 @@ typedef	struct	s_vars
 	t_node	*stb;
 	size_t	chunks_a;
 	size_t	chunks_b;
-	// int		status;	
+	int		argc;
+	char	**argv;
 }				t_vars;
 
 typedef struct s_chunk

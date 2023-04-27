@@ -1,4 +1,4 @@
-#include "push_swap.h";
+#include "push_swap.h"
 
 int	ft_ps_digitchecks(char *str, int *i, int *j, int *sign)
 {

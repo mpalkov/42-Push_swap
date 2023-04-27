@@ -79,7 +79,7 @@ int	ft_fillarr(int *array, size_t len, char **str)
 	size_t	i;
 
 	i = 0;
-	while (i <= len)
+	while (i < len)
 	{
 		if (ft_ps_atoi(str[i + 1], array + i) == -1)
 		{
@@ -192,44 +192,44 @@ int	ft_ps_initialize(int argc, char **argv, t_vars *data)
 	return(1);
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
-	int		argc = 6;
-	char	*argv[] = {"push.c", "1", "2", "3", "4", "5"};
-	char	*argvb[] = {"push.c", "11", "12"};
+	// int		argc = 6;
+	// char	*argv[] = {"push.c", "1", "2", "3", "4", "5"};
+	// char	*argvb[] = {"push.c", "11", "12"};
 
 	t_vars	data;
 
 	//put all init and sortarray into one line with its variables etc.
-	if (ft_ps_initialize(argv, argc, &data) == -1)
+	if (ft_ps_initialize(argc, argv, &data) == -1)
 		return(-1);
 		//ERROR
 	
 
-	sta = ft_init_stack(argc, argv);
-	if (!sta)
-		return (-1);
-		// ERROR CREATING STACK A
-// CONTUNAR AQUI
+// 	sta = ft_init_stack(argc, argv);
+// 	if (!sta)
+// 		return (-1);
+// 		// ERROR CREATING STACK A
+// // CONTUNAR AQUI
 
-// TESTING
-	stb = ft_init_stack(3, argvb);
-	t_node	*test1 = ft_init_stack(2, (char *[]){"coco", "99"});
-	t_node	*test0 = NULL;
-	ft_push(&test0, &test1);
-	//wrong 1 or 0 elements stacks.
-	printf("a: ");
-	ft_lstiter(test1, ft_printf_int);
-	printf("\nb: ");
-	ft_lstiter(sta, ft_printf_int);
-	printf("\n");
-	printf("pb\n");
-	ft_push(&test1, &sta);
-	printf("a: %p", test1);
-	ft_lstiter(test1, ft_printf_int);
-	printf("\nb: ");
-	ft_lstiter(sta, ft_printf_int);
-	printf("\n\n");
+// // TESTING
+// 	stb = ft_init_stack(3, argvb);
+// 	t_node	*test1 = ft_init_stack(2, (char *[]){"coco", "99"});
+// 	t_node	*test0 = NULL;
+// 	ft_push(&test0, &test1);
+// 	//wrong 1 or 0 elements stacks.
+// 	printf("a: ");
+// 	ft_lstiter(test1, ft_printf_int);
+// 	printf("\nb: ");
+// 	ft_lstiter(sta, ft_printf_int);
+// 	printf("\n");
+// 	printf("pb\n");
+// 	ft_push(&test1, &sta);
+// 	printf("a: %p", test1);
+// 	ft_lstiter(test1, ft_printf_int);
+// 	printf("\nb: ");
+// 	ft_lstiter(sta, ft_printf_int);
+// 	printf("\n\n");
 
 	return (0);
 }
