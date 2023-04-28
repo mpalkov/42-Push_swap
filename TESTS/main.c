@@ -187,11 +187,24 @@ int	ft_ps_initialize(int argc, char **argv, t_vars *data)
 		// ERROR - TERMINATE
 	if (ft_fillarr(data->sortedarray, data->arrayln, argv) == -1)
 		return (-1);
-	ft_selection_sort(data->sortedarray, data->arrayln);
+	if (ft_ps_numrepeats(data->sortedarray, data->arrayln) == 1)
+	{
+		return (-1);
+		//ERROR - HAS DUPLICATE NUMBERS
+	}
+// SOLVE HOW TO HANDLE IF IT IS SORTEDD. IT IS NOT AND ERROR,
+// SHOULD NOT PRINT AN ERROR MSG.
+	if (ft_ps_issorted(data->sortedarray, data->arrayln) == 0)
+	{
+		return (-1);
+		//IS SORTED - TERMINATE WITH NO MESSAGES
+	}
 	data->sta = ft_init_stack(data->argc, data->argv);
 	if (!data->sta)
 		return (-1);
 		//malloc problems.
+	ft_selection_sort(data->sortedarray, data->arrayln);
+
 	return(1);
 }
 
