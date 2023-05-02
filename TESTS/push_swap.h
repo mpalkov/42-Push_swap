@@ -14,6 +14,7 @@
 # define PUSH_SWAP_H
 # include <stdlib.h> //to use NULL, atoi
 # include <stdio.h> //printf
+# include <errno.h> //errors
 
 typedef struct	s_node
 {
