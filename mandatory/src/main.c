@@ -162,6 +162,7 @@ int	ft_ps_data_null(t_vars *data)
 	data->chunks_b = 0;
 	data->argc = 0;
 	data->argv = NULL;
+	data->errno = 0;
 	return (1);
 }
 
@@ -174,8 +175,8 @@ int	ft_ps_initdata(int argc, char **argv, t_vars *data)
 	data->argv = argv;
 	data->sortedarray = malloc(sizeof(data->sortedarray) * data->arrayln);
 	if (!data->sortedarray)
-		return (-1);
-		// MEM-ERROR - TERMINATE
+		ft_ps_error(MALLOCERR);
+		// MEM-ERROR - free and TERMINATE
 	return (1);
 }
 
