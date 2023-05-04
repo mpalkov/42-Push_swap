@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-int	ft_ps_digitchecks(char *str, int *i, int *j, int *sign)
+int	ft_ps_digitchecks(char *str, int *i, int *j, int *sign, t_vars *data)
 {
 	while (str[*i] && (str[*i] == ' ' || (str[*i] >= 9 && str[*i] <= 13)))
 		++(*i);
@@ -20,8 +20,10 @@ int	ft_ps_digitchecks(char *str, int *i, int *j, int *sign)
 	return (1);
 }
 
-int	ft_ps_atoi(char *str, int *nbr)
+int	ft_ps_atoi(char *str, int *nbr, t_vars *data)
 {
+	// char *str, int *nbr
+	// str[i + 1], array + i
 	int		i;
 	int		j;
 	int		sign;
@@ -32,16 +34,16 @@ int	ft_ps_atoi(char *str, int *nbr)
 	sign = 1;
 	c = 0;
 	if (!str || !nbr)
-		return (-1);
-		//ERROR - WRONG ATOI INPUT
+		ft_ps_error(data, INPUTERR);
+		// ERROR - WRONG ATOI INPUT
 	if (ft_ps_digitchecks(str, &i, &j, &sign) == -1)
-		return (-1);
+		ft_ps_error(data, INPUTERR);
 	while (--j >= 0)
 		c = c * 10 + (str[i++] - '0');
 	c = c * sign;
 	*nbr = (int)c;
 	if (c != *nbr)
-		return (-1);
+		ft_ps_error(data, INPUTERR);
 		// ERROR - INPUT EXCEEDS INT LIMITS
 	return (1);
 }
