@@ -12,9 +12,18 @@
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
-# include <stdlib.h> //to use NULL, atoi
-# include <stdio.h> //printf
-# include <errno.h> //errors
+# include <stdlib.h>	// to use NULL, atoi
+# include <stdio.h>		// printf
+// # include <errno.h>		// errors
+
+enum // ERRORS
+{
+	OK,			// No error, everything OK
+	NO_ACTIONS,	// No actions needed, return prompt without pinting
+	INPUTERR,	// Input on error
+	MALLOCERR,	// Error on malloc
+	UNDEFERR,	// Undefined error	
+};
 
 typedef struct	s_node
 {
@@ -37,7 +46,7 @@ typedef	struct	s_vars
 	size_t	chunks_b;
 	int		argc;
 	char	**argv;
-	int		errno;
+	int		errno;	// see enum ERRORS
 }				t_vars;
 
 typedef struct s_chunk
