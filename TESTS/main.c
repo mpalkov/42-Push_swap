@@ -226,7 +226,7 @@ int	main(int argc, char **argv)
 // 	if (!sta)
 // 		return (-1);
 // 		// ERROR CREATING STACK A
-// // CONTUNAR AQUI
+// // CONTINUAR AQUI
 
 // // TESTING
 // 	stb = ft_init_stack(3, argvb);
