@@ -15,17 +15,17 @@
 int	ft_ps_printerr(int err)
 {
 	if (err > 1)
-		write(STDERR_FILENO, "Error", 5);
-	write(STDOUT_FILENO, "\n", 1);
+		write(STDERR_FILENO, "Error\n", 6);
+	// write(STDOUT_FILENO, "\n", 1);
 	return (0);
 }
 
 int	ft_ps_error(t_vars *data, int err)
 {
 	data->errno = err;
-	ft_freenull(&(data->sortedarray));
-	ft_freenull(&(data->sta));
-	ft_freenull(&(data->stb));
+	ft_ptr_freenull(&(data->sortedarray));
+	ft_ptr_freenull(&(data->sta));
+	ft_ptr_freenull(&(data->stb));
 	ft_ps_printerr(err);
 	// no write protection here, becaue after this the program terminates.
 	if (err == OK || err == NO_ACTIONS)
@@ -52,7 +52,7 @@ t_node	*ft_lst_getprelast(t_node *stack)
 	return (stack);
 }
 
-int	ft_addlast(t_node **stack, int data)
+int	ft_addlast(t_node **stack, int n, t_vars *data)
 {
 	t_node	*last;
 	t_node	*new;
@@ -60,8 +60,8 @@ int	ft_addlast(t_node **stack, int data)
 	new = NULL;
 	new = malloc(sizeof(*new));
 	if (!new)
-		return (-1);
-	new->nbr = data;
+		ft_ps_error(data, MALLOCERR);
+	new->nbr = n;
 	new->next = NULL;
 	new->idx = 0;
 	last = ft_lst_getlast(*stack);
@@ -74,21 +74,15 @@ int	ft_addlast(t_node **stack, int data)
 	return (1);
 }
 
-t_node	*ft_init_stack(int argc, char **argv, t_vars *data)
+t_node	*ft_init_stack(t_vars *data)
 {
 	t_node	*stack;
-	int		i;
-	int		nbr;
-
-	i = 1;
-	nbr = 0;
+	size_t	i;
+	
+	i = 0;
 	stack = NULL;
-	while (i <= argc - 1)
-	{
-		nbr = atoi(argv[i++]);
-		if (ft_addlast(&stack, nbr) == -1)
-			return (NULL);
-	}
+	while (i <= data->arrayln - 1)
+		ft_addlast(&stack, data->sortedarray[i++], data);
 	return (stack);
 }
 
@@ -144,6 +138,7 @@ int	ft_selection_sort(int *array, size_t len)
 	return (0);
 }
 
+/* BUBBLE SORT
 int	ft_sortarr(int *array, size_t len)
 {
 	size_t	i;
@@ -170,6 +165,7 @@ int	ft_sortarr(int *array, size_t len)
 	}
 	return (1);
 }
+*/
 
 int	ft_ps_data_null(t_vars *data)
 {
@@ -234,6 +230,21 @@ int	ft_ps_issorted(int *array, size_t len, t_vars *data)
 			return (0);
 	}
 	ft_ps_error(data, NO_ACTIONS);
+	return (1);
+}
+
+int	ft_ps_indexnodes(t_vars *data)
+{
+	size_t	i;
+	int		*arr;
+
+	i = 0;
+	arr = data->sortedarray;
+	while(i < data->arrayln)
+	{
+		// CONTINUE HERE
+	}
+	return (0);
 }
 
 int ft_ps_initialize(int argc, char **argv, t_vars *data)
@@ -256,12 +267,11 @@ int ft_ps_initialize(int argc, char **argv, t_vars *data)
 		// # INITCHECKS END
 
 	// CREATE THE STACK A
-	data->sta = ft_init_stack(data->argc, data->argv, data);
-	if (!data->sta)
-		return (-1);
-	// malloc problems.
+	data->sta = ft_init_stack(data);
 	ft_selection_sort(data->sortedarray, data->arrayln);
 
+	// ADD INDEX INFORMATION TO EACH LIST NODE
+	ft_ps_indexnodes(data);
 	return (1);
 }
 
@@ -273,7 +283,7 @@ int	main(int argc, char **argv)
 
 	t_vars	data;
 	if (argc == 1)
-		ft_ps_error(&data, NO_ACTIONS);
+		return (0);
 
 	// put all init and sortarray into one line with its variables etc.
 	if (ft_ps_initialize(argc, argv, &data) == -1)

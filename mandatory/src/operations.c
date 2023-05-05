@@ -14,7 +14,23 @@
 
 
 // LIST_FUNCTIONS.c
-void	ft_lstiter(t_node *lst, void (*f)(void *))
+
+ssize_t	ft_ps_lstfind(t_node *lst, int key)
+{
+	size_t	i;
+
+	i = -1;
+	while (lst)
+	{
+		++i;
+		if (lst->nbr == key)
+			return (i);
+		lst = lst->next;
+	}
+	return (i);
+}
+
+void	ft_ps_lstiter(t_node *lst, void (*f)(void *))
 {
 	if (!lst)
 		return ;
@@ -38,7 +54,7 @@ void	ft_printf_int(void *data)
 // OPERATIONS.c
 int	ft_swap(t_node **stack)
 {
-	t_node	tempnode;
+	// t_node	tempnode;
 	t_node	*tmp;
 
 	if (!(*stack) || !(*stack)->next)

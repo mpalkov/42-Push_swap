@@ -60,9 +60,9 @@ typedef struct s_chunk
 }				t_chunk;
 
 // push-swap custom functions
-int		ft_addlast(t_node **stack, int data);
+int		ft_addlast(t_node **stack, int n, t_vars *data);
 void	ft_printf_int(void *data);
-void	ft_lstiter(t_node *lst, void (*f)(void *));
+void	ft_ps_lstiter(t_node *lst, void (*f)(void *));
 
 int		ft_ps_digitchecks(char *str, int *i, int *j, int *sign);
 int		ft_ps_atoi(char *str, int *nbr, t_vars *data);
