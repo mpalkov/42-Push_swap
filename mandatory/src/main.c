@@ -74,7 +74,7 @@ int ft_addlast(t_node **stack, int data)
 	return (1);
 }
 
-t_node *ft_init_stack(int argc, char **argv)
+t_node *ft_init_stack(int argc, char **argv, t_vars *data)
 {
 	t_node *stack;
 	int i;
@@ -201,26 +201,63 @@ int ft_ps_initdata(int argc, char **argv, t_vars *data)
 	return (1);
 }
 
+// CHECK IF NUMREPEATS WITHIN ISSORTED CHECK
+int	ft_ps_numrepeats(int *array, size_t len, t_vars *data)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 1;
+	--len;
+	while(i < len && j <= len)
+	{
+		while (j <= len)
+		{
+			if (array[i] == array[j++])
+				ft_ps_error(data, INPUTERR);
+		}
+		++i;
+		j = i + 1;		
+	}
+	return (0);
+}
+
+int	ft_ps_issorted(int *array, size_t len, t_vars *data)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < len - 1)
+	{
+		if (array[i] < array[i + 1])
+			++i;
+		else
+			return (0);
+	}
+	ft_ps_error(data, NO_ACTIONS);
+}
+
 int ft_ps_initialize(int argc, char **argv, t_vars *data)
 {
 	ft_ps_data_null(data);
-	if (ft_ps_initdata(argc, argv, data) == -1)
-		return (-1);
-		// ERROR - TERMINATE
+	ft_ps_initdata(argc, argv, data);
 	ft_fillarr(data->sortedarray, data->arrayln, argv, data);
-	if (ft_ps_numrepeats(data->sortedarray, data->arrayln) == 1)
-	{
-		return (-1);
-		// ERROR - HAS DUPLICATE NUMBERS
-	}
-	// SOLVE HOW TO HANDLE IF IT IS SORTEDD. IT IS NOT AND ERROR,
-	// SHOULD NOT PRINT AN ERROR MSG.
-	if (ft_ps_issorted(data->sortedarray, data->arrayln) == 0)
-	{
-		return (-1);
-		// IS SORTED - TERMINATE WITH NO MESSAGES
-	}
-	data->sta = ft_init_stack(data->argc, data->argv);
+
+		// # INITCHECKS START
+	// if only 1 number and it's valid int, consider stack as ordered and do nothing.
+	if (argc == 2)
+		ft_ps_error(data, NO_ACTIONS);
+
+	// IF HAS DUPLICATE NUMBERS, EXIT AND ERROR
+	ft_ps_numrepeats(data->sortedarray, data->arrayln, data);
+	
+	// IF STACK IS SORTED ON INPUT, EXIT WITHOUT PRINTING.
+	ft_ps_issorted(data->sortedarray, data->arrayln, data);
+		// # INITCHECKS END
+
+	// CREATE THE STACK A
+	data->sta = ft_init_stack(data->argc, data->argv, data);
 	if (!data->sta)
 		return (-1);
 	// malloc problems.
@@ -236,6 +273,8 @@ int main(int argc, char **argv)
 	// char	*argvb[] = {"push.c", "11", "12"};
 
 	t_vars data;
+	if (argc == 1)
+		ft_ps_error(&data, NO_ACTIONS);
 
 	// put all init and sortarray into one line with its variables etc.
 	if (ft_ps_initialize(argc, argv, &data) == -1)

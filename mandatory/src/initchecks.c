@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-int	ft_ps_digitchecks(char *str, int *i, int *j, int *sign, t_vars *data)
+int	ft_ps_digitchecks(char *str, int *i, int *j, int *sign)
 {
 	while (str[*i] && (str[*i] == ' ' || (str[*i] >= 9 && str[*i] <= 13)))
 		++(*i);
