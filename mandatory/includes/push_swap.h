@@ -73,6 +73,7 @@ int		ft_ps_error(t_vars *data, int err);
 // list_tools.h - can be added to the libft maybe?
 t_node	*ft_lst_getlast(t_node *stack);
 t_node	*ft_lst_getprelast(t_node *stack);
+t_node	*ft_ps_lstfind(t_node *lst, int key);
 
 // operations.h
 int		ft_swap(t_node **stack);

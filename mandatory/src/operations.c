@@ -15,19 +15,15 @@
 
 // LIST_FUNCTIONS.c
 
-ssize_t	ft_ps_lstfind(t_node *lst, int key)
+t_node	*ft_ps_lstfind(t_node *lst, int key)
 {
-	size_t	i;
-
-	i = -1;
 	while (lst)
 	{
-		++i;
 		if (lst->nbr == key)
-			return (i);
+			return (lst);
 		lst = lst->next;
 	}
-	return (i);
+	return (lst);
 }
 
 void	ft_ps_lstiter(t_node *lst, void (*f)(void *))
