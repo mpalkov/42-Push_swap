@@ -108,7 +108,7 @@ clean:
 
 fclean: clean
 	@echo "$(ORANGE)	Cleaning main binary files$(DEFCOLOR)"
-	@$(RM) $(NAME_CLI) $(NAME_SRV) $(NAME_C_BNS) $(NAME_S_BNS)
+	@$(RM) $(NAME)
 	@echo "$(ORANGE)	Libft fclean$(DEFCOLOR)"
 	@$(MAKE) fclean -sC $(LIBFT_DIR)
 
