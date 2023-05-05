@@ -29,35 +29,35 @@ enum // ERRORS
 
 typedef struct s_node
 {
-	int nbr;
-	int idx;
-	struct s_node *next;
+	int				nbr;
+	int				idx;
+	struct s_node	*next;
 	//	struct s_node	*prev;
 	// int				listsize;
 	// int				chunkid;
 	// int				chunksize;
-} t_node;
+}				t_node;
 
 typedef struct s_vars
 {
-	int *sortedarray;
-	size_t arrayln;
-	t_node *sta;
-	t_node *stb;
-	size_t chunks_a;
-	size_t chunks_b;
-	int argc;
-	char **argv;
-	int errno; // see enum ERRORS
-} t_vars;
+	int		*sortedarray;
+	size_t	arrayln;
+	t_node	*sta;
+	t_node	*stb;
+	size_t	chunks_a;
+	size_t	chunks_b;
+	int		argc;
+	char	**argv;
+	int		errno; // see enum ERRORS
+}				t_vars;
 
 typedef struct s_chunk
 {
-	t_node *start;
-	size_t len;
-	int in_stack;
-	size_t rra2do;
-} t_chunk;
+	t_node	*start;
+	size_t	len;
+	int		in_stack;
+	size_t	rra2do;
+}				t_chunk;
 
 // push-swap custom functions
 int		ft_addlast(t_node **stack, int data);
@@ -71,15 +71,15 @@ int		ft_ps_printerr(int err);
 int		ft_ps_error(t_vars *data, int err);
 
 // list_tools.h - can be added to the libft maybe?
-t_node *ft_lst_getlast(t_node *stack);
-t_node *ft_lst_getprelast(t_node *stack);
+t_node	*ft_lst_getlast(t_node *stack);
+t_node	*ft_lst_getprelast(t_node *stack);
 
 // operations.h
-int ft_swap(t_node **stack);
-int ft_sa(t_node **stack);
-int ft_rotate(t_node **stack);
-int ft_ra(t_node **stack);
-int ft_revrotate(t_node **stack);
-int ft_push(t_node **from, t_node **to);
+int		ft_swap(t_node **stack);
+int		ft_sa(t_node **stack);
+int		ft_rotate(t_node **stack);
+int		ft_ra(t_node **stack);
+int		ft_revrotate(t_node **stack);
+int		ft_push(t_node **from, t_node **to);
 
 #endif

@@ -20,7 +20,7 @@ int	ft_ps_printerr(int err)
 	return (0);
 }
 
-int ft_ps_error(t_vars *data, int err)
+int	ft_ps_error(t_vars *data, int err)
 {
 	data->errno = err;
 	ft_freenull(&(data->sortedarray));
@@ -34,7 +34,7 @@ int ft_ps_error(t_vars *data, int err)
 		exit(EXIT_FAILURE);
 }
 
-t_node *ft_lst_getlast(t_node *stack)
+t_node	*ft_lst_getlast(t_node *stack)
 {
 	if (!stack)
 		return (NULL);
@@ -43,7 +43,7 @@ t_node *ft_lst_getlast(t_node *stack)
 	return (stack);
 }
 
-t_node *ft_lst_getprelast(t_node *stack)
+t_node	*ft_lst_getprelast(t_node *stack)
 {
 	if (!stack || !stack->next)
 		return (NULL);
@@ -52,10 +52,10 @@ t_node *ft_lst_getprelast(t_node *stack)
 	return (stack);
 }
 
-int ft_addlast(t_node **stack, int data)
+int	ft_addlast(t_node **stack, int data)
 {
-	t_node *last;
-	t_node *new;
+	t_node	*last;
+	t_node	*new;
 
 	new = NULL;
 	new = malloc(sizeof(*new));
@@ -74,16 +74,15 @@ int ft_addlast(t_node **stack, int data)
 	return (1);
 }
 
-t_node *ft_init_stack(int argc, char **argv, t_vars *data)
+t_node	*ft_init_stack(int argc, char **argv, t_vars *data)
 {
-	t_node *stack;
-	int i;
-	int nbr;
+	t_node	*stack;
+	int		i;
+	int		nbr;
 
 	i = 1;
 	nbr = 0;
 	stack = NULL;
-
 	while (i <= argc - 1)
 	{
 		nbr = atoi(argv[i++]);
@@ -96,11 +95,11 @@ t_node *ft_init_stack(int argc, char **argv, t_vars *data)
 // sta == stack_a
 // stb == stack_b
 
-int ft_fillarr(int *array, size_t len, char **str, t_vars *data)
+int	ft_fillarr(int *array, size_t len, char **str, t_vars *data)
 {
 	// int *array, size_t len, char **str
 	// data->sortedarray, data->arrayln, argv
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (i < len)
@@ -111,7 +110,7 @@ int ft_fillarr(int *array, size_t len, char **str, t_vars *data)
 	return (1);
 }
 
-int ft_swap_ints(int *a, int *b)
+int	ft_swap_ints(int *a, int *b)
 {
 	int tmp[1];
 
@@ -121,11 +120,11 @@ int ft_swap_ints(int *a, int *b)
 	return (1);
 }
 
-int ft_selection_sort(int *array, size_t len)
+int	ft_selection_sort(int *array, size_t len)
 {
-	size_t i;
-	size_t j;
-	size_t idx;
+	size_t	i;
+	size_t	j;
+	size_t	idx;
 
 	i = 0;
 	while (i < len)
@@ -145,14 +144,13 @@ int ft_selection_sort(int *array, size_t len)
 	return (0);
 }
 
-int ft_sortarr(int *array, size_t len)
+int	ft_sortarr(int *array, size_t len)
 {
-	size_t i;
-	int sorted;
+	size_t	i;
+	int		sorted;
 
 	i = 0;
 	sorted = 0;
-
 	if (len > 1)
 	{
 		while (sorted == 0)
@@ -173,7 +171,7 @@ int ft_sortarr(int *array, size_t len)
 	return (1);
 }
 
-int ft_ps_data_null(t_vars *data)
+int	ft_ps_data_null(t_vars *data)
 {
 	data->sortedarray = NULL;
 	data->arrayln = 0;
@@ -187,7 +185,7 @@ int ft_ps_data_null(t_vars *data)
 	return (1);
 }
 
-int ft_ps_initdata(int argc, char **argv, t_vars *data)
+int	ft_ps_initdata(int argc, char **argv, t_vars *data)
 {
 	if (argc < 2)
 		ft_ps_error(data, INPUTERR);
@@ -210,7 +208,7 @@ int	ft_ps_numrepeats(int *array, size_t len, t_vars *data)
 	i = 0;
 	j = 1;
 	--len;
-	while(i < len && j <= len)
+	while (i < len && j <= len)
 	{
 		while (j <= len)
 		{
@@ -245,7 +243,8 @@ int ft_ps_initialize(int argc, char **argv, t_vars *data)
 	ft_fillarr(data->sortedarray, data->arrayln, argv, data);
 
 		// # INITCHECKS START
-	// if only 1 number and it's valid int, consider stack as ordered and do nothing.
+	// if only 1 number and it's valid int,
+	// consider stack as ordered and do nothing.
 	if (argc == 2)
 		ft_ps_error(data, NO_ACTIONS);
 
@@ -266,13 +265,13 @@ int ft_ps_initialize(int argc, char **argv, t_vars *data)
 	return (1);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	// int		argc = 6;
 	// char	*argv[] = {"push.c", "1", "2", "3", "4", "5"};
 	// char	*argvb[] = {"push.c", "11", "12"};
 
-	t_vars data;
+	t_vars	data;
 	if (argc == 1)
 		ft_ps_error(&data, NO_ACTIONS);
 
@@ -305,6 +304,5 @@ int main(int argc, char **argv)
 	// 	printf("\nb: ");
 	// 	ft_lstiter(sta, ft_printf_int);
 	// 	printf("\n\n");
-
 	return (0);
 }
