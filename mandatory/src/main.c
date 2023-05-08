@@ -173,8 +173,10 @@ int	ft_ps_data_null(t_vars *data)
 	data->arrayln = 0;
 	data->sta = NULL;
 	data->stb = NULL;
-	data->chunks_a = 0;
-	data->chunks_b = 0;
+	data->chunks_a = NULL;
+	data->chunks_b = NULL;
+	data->chnum_a = 0;
+	data->chnum_b = 0;
 	data->argc = 0;
 	data->argv = NULL;
 	data->errno = 0;
@@ -252,6 +254,15 @@ int	ft_ps_indexnodes(t_vars *data)
 	return (0);
 }
 
+int	ft_ps_addchunk(t_list *where, t_list *start, s_size count, t_vars *data)
+{
+	if (!where || !start || !count || !data)
+		ft_ps_error(data, UNDEFERR);
+	
+	
+	return(0);
+}
+
 int ft_ps_initialize(int argc, char **argv, t_vars *data)
 {
 	ft_ps_data_null(data);
@@ -273,6 +284,7 @@ int ft_ps_initialize(int argc, char **argv, t_vars *data)
 
 	// CREATE THE STACK A
 	data->sta = ft_init_stack(data);
+	ft_ps_addchunk(whereto, what_start, how_many)
 	ft_selection_sort(data->sortedarray, data->arrayln);
 
 	// ADD INDEX INFORMATION TO EACH LIST NODE
