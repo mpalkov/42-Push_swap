@@ -44,8 +44,10 @@ typedef struct s_vars
 	size_t	arrayln;
 	t_node	*sta;
 	t_node	*stb;
-	size_t	chunks_a;
-	size_t	chunks_b;
+	size_t	chnum_a;
+	size_t	chnum_b;
+	t_list	*chunks_a;
+	t_list	*chunks_b;
 	int		argc;
 	char	**argv;
 	int		errno; // see enum ERRORS
@@ -53,10 +55,11 @@ typedef struct s_vars
 
 typedef struct s_chunk
 {
-	t_node	*start;
-	size_t	len;
-	int		in_stack;
-	size_t	rra2do;
+//	t_node			*start;
+	size_t			len;
+//	int				in_stack;
+	size_t			rra2do;
+	struct s_chunk	*next;
 }				t_chunk;
 
 // push-swap custom functions

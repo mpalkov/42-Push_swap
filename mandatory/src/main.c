@@ -254,11 +254,13 @@ int	ft_ps_indexnodes(t_vars *data)
 	return (0);
 }
 
-int	ft_ps_addchunk(t_list *where, t_list *start, s_size count, t_vars *data)
+int	ft_ps_addchunk(t_chunk *where, t_chunk *start, s_size count, t_vars *data)
 {
 	if (!where || !start || !count || !data)
 		ft_ps_error(data, UNDEFERR);
-	
+
+		//CONTINUE HERE
+		
 	
 	return(0);
 }
