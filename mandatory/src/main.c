@@ -239,16 +239,15 @@ int	ft_ps_indexnodes(t_vars *data)
 	int		*arr;
 	t_node	*tmp;
 
-	i = 0;
+	i = 1;
 	arr = data->sortedarray;
-	while(i < data->arrayln)
+	while(i <= data->arrayln)
 	{
 		tmp = NULL;
-		tmp = ft_ps_lstfind(data->sta, arr[i]);
+		tmp = ft_ps_lstfind(data->sta, arr[i - 1]);
 		if (tmp)
-			tmp->idx = arr[i];
+			tmp->idx = i;
 		++i;
-		// CONTINUE HERE
 	}
 	return (0);
 }
