@@ -246,7 +246,7 @@ int	ft_ps_indexnodes(t_vars *data)
 	while(i <= data->arrayln)
 	{
 		tmp = NULL;
-		tmp = ft_ps_lstfind(data->sta, arr[i - 1]);
+		tmp = ft_ps_lstfind(data->sta, arr[data->arrayln - i]);
 		if (tmp)
 			tmp->idx = i;
 		++i;
@@ -254,16 +254,32 @@ int	ft_ps_indexnodes(t_vars *data)
 	return (0);
 }
 
-int	ft_ps_addchunk(t_chunk *where, t_chunk *start, s_size count, t_vars *data)
+int	ft_ps_chunk_null(t_chunk *chn)
 {
-	if (!where || !start || !count || !data)
-		ft_ps_error(data, UNDEFERR);
-
-		//CONTINUE HERE
-		
-	
+	chn->len = 0;
+	chn->rra2do = 0;
+	chn->next = NULL;
 	return(0);
 }
+
+int	ft_ps_chunk_add(t_chunk **where, t_chunk *start, size_t count, t_vars *data)
+{
+	t_chunk	*new;
+
+	if (!start || !count || !data)
+		ft_ps_error(data, UNDEFERR);
+
+	new = malloc(sizeof(*new));
+	if (!new)
+		ft_ps_error(data, MALLOCERR);
+	ft_ps_chunk_null(new);
+	new->len = count;
+	new->next = *where;
+	*where = new;
+	return(0);
+}
+
+// CREATE FT_PS_CHUNK_MOD AND FT_PS_CHUNK_SPLIT AND FT_PS_CHUNK_MV
 
 int ft_ps_initialize(int argc, char **argv, t_vars *data)
 {
@@ -286,13 +302,44 @@ int ft_ps_initialize(int argc, char **argv, t_vars *data)
 
 	// CREATE THE STACK A
 	data->sta = ft_init_stack(data);
-	ft_ps_addchunk(whereto, what_start, how_many)
+	
 	ft_selection_sort(data->sortedarray, data->arrayln);
 
 	// ADD INDEX INFORMATION TO EACH LIST NODE
 	ft_ps_indexnodes(data);
 	return (1);
 }
+
+/*
+int	ft_ps_sorting(t_vars *data)
+{
+	size_t	chunkln_a;
+	//size_t	chunkln_b;
+
+	chunkln_a = ft_lstsize((t_list *)(data->chunks_a))
+	ft_ps_chunk_add(&(data->chunks_a), data->sta, data->arrayln, data);
+
+	//chunks from stA to stB
+	while(chunkln_a)
+	{
+		// ft_ps_issorted stA
+		if (chunkln_a = 1)
+		{
+			
+		}
+		else if (chunkln_a = 2)
+		{
+			// ft_sort2;
+		}
+		else if (chunkln_a = 3)
+			// ft_sort3;
+
+		ft_ps_chunk_split(&(data->chunks_a), &(data->chunks_b),  )
+	}
+
+	return (0);
+}
+*/
 
 int	main(int argc, char **argv)
 {

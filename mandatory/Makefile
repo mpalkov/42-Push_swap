@@ -6,11 +6,11 @@
 #    By: mpalkov <mpalkov@student.42barcelo>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 13:58:44 by mpalkov           #+#    #+#              #
-#    Updated: 2023/05/04 16:12:48 by mpalkov          ###   ########.fr        #
+#    Updated: 2023/05/09 15:28:46 by mpalkov          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-MODE	:=	normal
+MODE	:=	default
 
 ifeq ($(MODE),debug)
 	CFLAGS	+=	-g3
