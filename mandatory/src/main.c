@@ -262,25 +262,21 @@ int	ft_ps_sortedcheck(t_node *start, size_t len, int order, t_vars *data)
 	return (sorted);
 }
 
-int	ft_ps_handle2(t_vars *data)
+int	ft_ps_handle2(t_node *stack, int order, t_vars *data)
 {
 	int	issorted;
 
 	issorted = 0;
 	while (!issorted)
 	{
-		issorted = ft_ps_sortedcheck(data->sta, 0, );
+		issorted = ft_ps_sortedcheck(stack, 2, order, data);
 		if (issorted)
 			return (1);
 		else
 			{
-				swap
+				// swap
 			}
 	}	
-	if ft_ps_sortedcheck() == 0;
-		//swap
-	
-
 	return (0);
 }
 
