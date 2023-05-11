@@ -21,6 +21,9 @@
 # define SIZEFOR100 25
 # define SIZEFOR500 63
 
+# define ASCEND 1
+# define DESCEND 0
+
 enum // ERRORS
 {
 	OK,			// No error, everything OK

@@ -228,9 +228,9 @@ int	ft_ps_indexnodes(t_vars *data)
 // Check if indexes of 2 nodes are sorted in desired order
 int	ft_ps_inorder(t_node *cur, int order)
 {
-	if (order == 0 && cur->idx == cur->next->idx - 1)
+	if (order == 0 && cur->idx == cur->next->idx + 1)
 		return (1);
-	else if (order == 1 && cur->idx == cur->next->idx + 1)
+	else if (order == 1 && cur->idx == cur->next->idx - 1)
 		return (1);
 	return(0);
 }
@@ -243,6 +243,7 @@ int	ft_ps_sortedcheck(t_node *start, size_t len, int order, t_vars *data)
 	t_node	*cur;
 	int		sorted;
 
+	cur = start;
 	sorted = 1;
 	i = 1;
 	if (len == 0)
