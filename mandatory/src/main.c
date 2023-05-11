@@ -138,35 +138,6 @@ int	ft_selection_sort(int *array, size_t len)
 	return (0);
 }
 
-/* BUBBLE SORT
-int	ft_sortarr(int *array, size_t len)
-{
-	size_t	i;
-	int		sorted;
-
-	i = 0;
-	sorted = 0;
-	if (len > 1)
-	{
-		while (sorted == 0)
-		{
-			sorted = 1;
-			while (i < len - 1)
-			{
-				if (array[i] > array[i + 1])
-				{
-					ft_swap_ints(array + i, array + i + 1);
-					sorted = 0;
-				}
-				++i;
-			}
-			i = 0;
-		}
-	}
-	return (1);
-}
-*/
-
 int	ft_ps_data_null(t_vars *data)
 {
 	data->sortedarray = NULL;
@@ -251,6 +222,80 @@ int	ft_ps_indexnodes(t_vars *data)
 			tmp->idx = i;
 		++i;
 	}
+	return (0);
+}
+
+// Check if indexes of 2 nodes are sorted in desired order
+int	ft_ps_inorder(t_node *cur, int order)
+{
+	if (order == 0 && cur->idx == cur->next->idx - 1)
+		return (1);
+	else if (order == 1 && cur->idx == cur->next->idx + 1)
+		return (1);
+	return(0);
+}
+
+//ORDER 0 == DESCENDING	(WHEN SORTED IN STACK A)
+//ORDER 1 == ASCENDING	(WHEN SORTED IN STACK B)
+int	ft_ps_sortedcheck(t_node *start, size_t len, int order, t_vars *data)
+{
+	size_t	i;
+	t_node	*cur;
+	int		sorted;
+
+	sorted = 1;
+	i = 1;
+	if (len == 0)
+		len = data->arrayln;
+	while (cur && cur->next && sorted && i < len)
+	{
+		if (ft_ps_inorder(cur, order))
+		{
+			sorted = 1;
+			cur = cur->next;
+			++i;
+		}
+		else
+			sorted = 0;
+	}	
+	return (sorted);
+}
+
+int	ft_ps_handle2(t_vars *data)
+{
+	int	issorted;
+
+	issorted = 0;
+	while (!issorted)
+	{
+		issorted = ft_ps_sortedcheck(data->sta, 0, );
+		if (issorted)
+			return (1);
+		else
+			{
+				swap
+			}
+	}	
+	if ft_ps_sortedcheck() == 0;
+		//swap
+	
+
+	return (0);
+}
+
+int ft_ps_sorting(t_vars *data)
+{
+	len = data->arrayln;
+	if (len == 2)
+		ft_ps_handle2(data);
+	else if (len == 3)
+		ft_ps_handle3();
+	else if (len <= 5)
+		ft_ps_handle5();
+	else if (len <= 100)
+		ft_ps_handle100();
+	else if (len > 100)
+		ft_ps_handle500();
 	return (0);
 }
 
