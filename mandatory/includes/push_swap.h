@@ -17,6 +17,10 @@
 # include "libft.h"
 // # include <errno.h>	// errors
 
+//define chunk size for stack less than 100 or less than 500 numbers
+# define SIZEFOR100 25
+# define SIZEFOR500 63
+
 enum // ERRORS
 {
 	OK,			// No error, everything OK
@@ -53,6 +57,7 @@ typedef struct s_vars
 	int		errno; // see enum ERRORS
 }				t_vars;
 
+/*
 typedef struct s_chunk
 {
 //	t_node			*start;
@@ -61,6 +66,7 @@ typedef struct s_chunk
 	size_t			rra2do;
 	struct s_chunk	*next;
 }				t_chunk;
+*/
 
 // push-swap custom functions
 int		ft_addlast(t_node **stack, int n, t_vars *data);
