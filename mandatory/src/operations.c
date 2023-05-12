@@ -47,6 +47,17 @@ void	ft_printf_int(void *data)
 	return ;
 }
 
+// OPERATIONS_UTILS
+char	ft_ps_stacksel(t_node *stack, t_vars *data)
+{
+	if (stack == data->sta)
+		return ('a');
+	if (stack == data->stb)
+		return ('b');
+	ft_ps_error(data, UNDEFERR);
+	return(0);
+}
+
 // OPERATIONS.c
 int	ft_swap(t_node **stack)
 {
@@ -62,15 +73,29 @@ int	ft_swap(t_node **stack)
 	return (1);
 }
 
-int	ft_sa(t_node **stack)
+int	ft_ps_swap(t_node **stack, t_vars *data)
 {
-	if (ft_swap(stack) == 1)
-	{
-		printf("sa\n");
-		return (1);
-	}
-	return (0);
+	char	sel;
+	
+	sel = ft_ps_stacksel(*stack, data);
+	if (ft_swap(stack))
+		{
+			if (printf("s%c\n", sel) < 0)
+				ft_ps_error(data, WRITEERR);
+			return(1);
+		}
+	return(0);
 }
+
+// int	ft_sa(t_node **stack)
+// {
+// 	if (ft_swap(stack) == 1)
+// 	{
+// 		printf("sa\n");
+// 		return (1);
+// 	}
+// 	return (0);
+// }
 
 // CREATE ft_sb sa ss
 
@@ -91,15 +116,29 @@ int	ft_rotate(t_node **stack)
 	return (1);
 }
 
-int	ft_ra(t_node **stack)
+int	ft_ps_rot(t_node **stack, t_vars *data)
 {
-	if (ft_rotate(stack) == 1)
-	{
-		printf("ra\n");
-		return (1);
-	}
-	return (0);
+	char	sel;
+	
+	sel = ft_ps_stacksel(*stack, data);
+	if (ft_rotate(stack))
+		{
+			if (printf("r%c\n", sel) < 0)
+				ft_ps_error(data, WRITEERR);
+			return(1);
+		}
+	return(0);
 }
+
+// int	ft_ra(t_node **stack)
+// {
+// 	if (ft_rotate(stack) == 1)
+// 	{
+// 		printf("ra\n");
+// 		return (1);
+// 	}
+// 	return (0);
+// }
 
 // CREATE ft_rb rr
 
@@ -116,7 +155,21 @@ int	ft_revrotate(t_node **stack)
 	return (1);
 }
 
-int	ft_push(t_node **from, t_node **to)
+int	ft_ps_rrot(t_node **stack, t_vars *data)
+{
+	char	sel;
+	
+	sel = ft_ps_stacksel(*stack, data);
+	if (ft_revrotate(stack))
+		{
+			if (printf("rr%c\n", sel) < 0)
+				ft_ps_error(data, WRITEERR);
+			return(1);
+		}
+	return(0);
+}
+
+int	ft_push(t_node **from, t_node **to, t_vars *data)
 {
 //	t_node	*tmp1;
 	t_node	*tmp2;
@@ -128,5 +181,20 @@ int	ft_push(t_node **from, t_node **to)
 	(*from)->next = *to;
 	*to = *from;
 	*from = tmp2;
+	
 	return (1);
+}
+
+int	ft_ps_push(t_node **from, t_node **to, t_vars *data)
+{
+	char	sel;
+
+	sel = ft_ps_stacksel(*to, data);
+	if (ft_push(from, to))
+		{
+			if (printf("p%c\n", sel) < 0)
+				ft_ps_error(data, WRITEERR);
+			return (1);
+		}
+	return (0);
 }

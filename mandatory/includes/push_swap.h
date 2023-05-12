@@ -89,10 +89,13 @@ t_node	*ft_ps_lstfind(t_node *lst, int key);
 
 // operations.h
 int		ft_swap(t_node **stack);
-int		ft_sa(t_node **stack);
 int		ft_rotate(t_node **stack);
-int		ft_ra(t_node **stack);
 int		ft_revrotate(t_node **stack);
 int		ft_push(t_node **from, t_node **to);
+
+int		ft_ps_swap(t_node **stack, t_vars *data);
+int		ft_ps_rot(t_node **stack, t_vars *data);
+int		ft_ps_rrot(t_node **stack, t_vars *data);
+int		ft_ps_push(t_node **from, t_node **to, t_vars *data);
 
 #endif

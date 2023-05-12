@@ -16,7 +16,6 @@ int	ft_ps_printerr(int err)
 {
 	if (err > 1)
 		write(STDERR_FILENO, "Error\n", 6);
-	// write(STDOUT_FILENO, "\n", 1);
 	return (0);
 }
 
@@ -24,8 +23,14 @@ int	ft_ps_error(t_vars *data, int err)
 {
 	data->errno = err;
 	ft_ptr_freenull(&(data->sortedarray));
-	ft_ptr_freenull(&(data->sta));
-	ft_ptr_freenull(&(data->stb));
+	//ft_freestack(sta);
+		// - inside it will crawl and freenull each node
+		// and then it will ptrfreenull data->sta;
+	// NOT ft_ptr_freenull(&(data->sta));
+	//ft_freestack(stb);
+		// - inside it will crawl and freenull each node
+		// and then it will ptrfreenull data->sta;
+	// NOT ft_ptr_freenull(&(data->stb));
 	ft_ps_printerr(err);
 	// no write protection here, becaue after this the program terminates.
 	if (err == OK || err == NO_ACTIONS)
@@ -273,26 +278,53 @@ int	ft_ps_handle2(t_node *stack, int order, t_vars *data)
 		if (issorted)
 			return (1);
 		else
-			{
-				// swap
-			}
+			ft_ps_swap(&stack, data);
+	}	
+	return (0);
+}
+
+int	ft_ps_sort3(t_node *stack, int order, t_vars *data)
+{
+	if (stack->idx == 3)
+		// Rotate (ra)
+	else if ((ft_lst_getlast(stack))->idx == 3)
+		// Swap (sa)
+	else if (stack->next->idx == 3)
+		//RevRotate (rra)
+	return(0);
+}
+
+int	ft_ps_handle3(t_node *stack, int order, t_vars *data)
+{
+	int	issorted;
+
+	issorted = 0;
+	while (!issorted)
+	{
+		issorted = ft_ps_sortedcheck(stack, 3, order, data);
+		if (issorted)
+			return (1);
+		else
+			ft_ps_sort3(stack, order, data);
 	}	
 	return (0);
 }
 
 int ft_ps_sorting(t_vars *data)
 {
+	size_t	len;
+
 	len = data->arrayln;
 	if (len == 2)
-		ft_ps_handle2(data);
+		ft_ps_handle2(data->sta, DESCEND, data);
 	else if (len == 3)
-		ft_ps_handle3();
-	else if (len <= 5)
-		ft_ps_handle5();
-	else if (len <= 100)
-		ft_ps_handle100();
-	else if (len > 100)
-		ft_ps_handle500();
+		ft_ps_handle3(data->sta, DESCEND, data);
+	// else if (len <= 5)
+	// 	ft_ps_handle5();
+	// else if (len <= 100)
+	// 	ft_ps_handle100();
+	// else if (len > 100)
+	// 	ft_ps_handle500();
 	return (0);
 }
 
@@ -338,6 +370,8 @@ int	main(int argc, char **argv)
 	// put all init and sortarray into one line with its variables etc.
 	if (ft_ps_initialize(argc, argv, &data) == -1)
 		return (-1);
+
+	ft_ps_sorting(&data);
 	// ERROR
 
 	// 	sta = ft_init_stack(argc, argv);
