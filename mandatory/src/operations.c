@@ -58,6 +58,19 @@ char	ft_ps_stacksel(t_node *stack, t_vars *data)
 	return(0);
 }
 
+int	ft_ps_ordersel(t_node *stack, t_vars *data)
+{
+	char	st;
+
+	st = ft_ps_stacksel(stack, data);
+	if (st == 'a')
+		return (DESCEND);
+	if (st == 'b')
+		return (ASCEND);
+	ft_ps_error(data, UNDEFERR);
+	return(0);
+}
+
 // OPERATIONS.c
 int	ft_swap(t_node **stack)
 {

@@ -242,6 +242,8 @@ int	ft_ps_inorder(t_node *cur, int order)
 
 //ORDER 0 == DESCENDING	(WHEN SORTED IN STACK A)
 //ORDER 1 == ASCENDING	(WHEN SORTED IN STACK B)
+//len - length to check-sort from start
+//(start == 1, to compare start + 1 len == 2)
 int	ft_ps_sortedcheck(t_node *start, size_t len, int order, t_vars *data)
 {
 	size_t	i;
@@ -267,11 +269,25 @@ int	ft_ps_sortedcheck(t_node *start, size_t len, int order, t_vars *data)
 	return (sorted);
 }
 
-int	ft_ps_handle2(t_node *stack, int order, t_vars *data)
+t_chunk	*ft_ps_topchunk(t_node *stack, t_vars *data)
+{
+	char	stack;
+
+	stack = ft_ps_stacksel(stack, data);
+	if (stack == 'a' && data->chunks_a)
+		return (data->chunks_a);
+	if (stack == 'b' && data->chunks_b)
+		return (data->chunks_b);
+	return (NULL);
+}
+
+int	ft_ps_handle2(t_node *stack, t_vars *data)
 {
 	int	issorted;
+	int	order;
 
 	issorted = 0;
+	order = ft_ps_ordersel(stack, data);
 	while (!issorted)
 	{
 		issorted = ft_ps_sortedcheck(stack, 2, order, data);
@@ -294,11 +310,13 @@ int	ft_ps_sort3(t_node *stack, int order, t_vars *data)
 	return(0);
 }
 
-int	ft_ps_handle3(t_node *stack, int order, t_vars *data)
+int	ft_ps_handle3(t_node *stack, t_vars *data)
 {
 	int	issorted;
+	int	order;
 
 	issorted = 0;
+	order = ft_ps_ordersel(stack, data);
 	while (!issorted)
 	{
 		issorted = ft_ps_sortedcheck(stack, 3, order, data);
@@ -309,6 +327,48 @@ int	ft_ps_handle3(t_node *stack, int order, t_vars *data)
 	}	
 	return (0);
 }
+
+int	ft_ps_sort5(t_vars *data)
+{
+	int	a;
+	int	b;
+
+	a = 5;
+	b = 0;
+	
+	while (a <= 3)
+	{
+		// minidx = getmin
+		// push minidx to satck_b
+		--a;
+		++b;
+	}
+	ft_ps_handle3(data->sta, data);
+	ft_ps_handle2(data->stb, data);
+	// pa pa
+	return (0);
+}
+
+
+int	ft_ps_handle5(t_node *stack, t_vars *data)
+{
+	int	issorted;
+	int	order;
+
+	issorted = 0;
+	order = DESCEND;
+	while (!issorted)
+	{
+		issorted = ft_ps_sortedcheck(stack, 5, order, data);
+		if (issorted)
+			return (1);
+		else
+			ft_ps_sort5(stack, data);
+	}
+	return (0);
+}
+
+
 
 int ft_ps_sorting(t_vars *data)
 {
