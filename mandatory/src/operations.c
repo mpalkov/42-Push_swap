@@ -73,33 +73,39 @@ int	ft_ps_ordersel(t_node *stack, t_vars *data)
 
 int	ft_ps_getminidx(t_node *stack, int len)
 {
-	minidx = -1;
-
+	int	minidx;
+	
+	minidx = INT_MAX;
 	while (len > 0)
 	{
-		minidx = stack->idx;
+		if (minidx > stack->idx)
+			minidx = stack->idx;
 		if (stack->next)
 			stack = stack->next;
-		--i;	
+		--len;
 	}
-	return (0);
+	return (minidx);
 }
 
-int	ft_ps_pushidx(t_node **stack, idx, t_vars *data)
+int	ft_ps_pushidx(t_node **stack, int idx, t_vars *data)
 {
 	t_node **to;
 
+	to = NULL;
 	if (ft_ps_stacksel(*stack, data) == 'a')
-		to == &data->stb;
+		to = &data->stb;
 	else if (ft_ps_stacksel(*stack, data) == 'b')
-		to == &data->sta;
+		to = &data->sta;
 	else
 		ft_ps_error(data, UNDEFERR);
 	
 	while (*stack)
 	{
-		if ((*stack)->nbr == idx)
-			ft_ps_push(stack, to);
+		if ((*stack)->idx == idx)
+		{
+			ft_ps_push(stack, to, data);
+			return (1);
+		}
 		else if ((*stack)->next)
 			ft_ps_rot(stack, data);
 		else if (!(*stack)->next)
@@ -197,16 +203,14 @@ int	ft_ps_rrot(t_node **stack, t_vars *data)
 
 int	ft_push(t_node **from, t_node **to)
 {
-//	t_node	*tmp1;
-	t_node	*tmp2;
+	t_node	*tmp;
 	
-	if (!*from || !*to)
+	if (!*from)
 		return (0);
-//	tmp1 = *to;
-	tmp2 = (*from)->next;
+	tmp = (*from)->next;
 	(*from)->next = *to;
 	*to = *from;
-	*from = tmp2;
+	*from = tmp;
 	
 	return (1);
 }

@@ -14,6 +14,7 @@
 # define PUSH_SWAP_H
 # include <stdlib.h>	// to use NULL, atoi
 # include <stdio.h>		// printf
+# include <limits.h>	// INT_MAX
 # include "libft.h"
 // # include <errno.h>	// errors
 
@@ -89,7 +90,7 @@ t_node	*ft_lst_getlast(t_node *stack);
 t_node	*ft_lst_getprelast(t_node *stack);
 t_node	*ft_ps_lstfind(t_node *lst, int key);
 int		ft_ps_getminidx(t_node *stack, int len);
-int		ft_ps_pushidx(t_node **stack, idx, t_vars *data);
+int		ft_ps_pushidx(t_node **stack, int idx, t_vars *data);
 
 // operations.h
 int		ft_swap(t_node **stack);

@@ -346,22 +346,24 @@ int	ft_ps_sort5(t_vars *data)
 
 	a = 5;
 	b = 0;
-	minidx = -1;
-	while (a <= 3)
+//	minidx = INT_MAX;
+	while (a >= 3)
 	{
 		minidx = ft_ps_getminidx(data->sta, ft_lstsize((t_list *)data->sta));
-		ft_ps_pushidx(t_node **stack, minidx, t_vars *data);
+		ft_ps_pushidx(&data->sta, minidx, data);
 		--a;
 		++b;
 	}
 	ft_ps_handle3(&data->sta, data);
-	ft_ps_handle2(&data->stb, data);
-	// pa pa
+	if (b == 2)
+		ft_ps_handle2(&data->sta, data);
+	while (b--)
+		ft_ps_push(&data->stb, &data->sta, data);
 	return (0);
 }
 
 
-int	ft_ps_handle5(t_node *stack, t_vars *data)
+int	ft_ps_handle5(t_node **stack, t_vars *data)
 {
 	int	issorted;
 	int	order;
@@ -370,7 +372,7 @@ int	ft_ps_handle5(t_node *stack, t_vars *data)
 	order = DESCEND;
 	while (!issorted)
 	{
-		issorted = ft_ps_sortedcheck(stack, 5, order, data);
+		issorted = ft_ps_sortedcheck(*stack, 5, order, data);
 		if (issorted)
 			return (1);
 		else
@@ -388,8 +390,8 @@ int ft_ps_sorting(t_vars *data)
 		ft_ps_handle2(&data->sta, data);
 	else if (len == 3)
 		ft_ps_handle3(&data->sta, data);
-	// else if (len <= 5)
-	// 	ft_ps_handle5();
+	else if (len <= 5)
+	 	ft_ps_handle5(&data->sta, data);
 	// else if (len <= 100)
 	// 	ft_ps_handle100();
 	// else if (len > 100)
