@@ -71,6 +71,43 @@ int	ft_ps_ordersel(t_node *stack, t_vars *data)
 	return(0);
 }
 
+int	ft_ps_getminidx(t_node *stack, int len)
+{
+	minidx = -1;
+
+	while (len > 0)
+	{
+		minidx = stack->idx;
+		if (stack->next)
+			stack = stack->next;
+		--i;	
+	}
+	return (0);
+}
+
+int	ft_ps_pushidx(t_node **stack, idx, t_vars *data)
+{
+	t_node **to;
+
+	if (ft_ps_stacksel(*stack, data) == 'a')
+		to == &data->stb;
+	else if (ft_ps_stacksel(*stack, data) == 'b')
+		to == &data->sta;
+	else
+		ft_ps_error(data, UNDEFERR);
+	
+	while (*stack)
+	{
+		if ((*stack)->nbr == idx)
+			ft_ps_push(stack, to);
+		else if ((*stack)->next)
+			ft_ps_rot(stack, data);
+		else if (!(*stack)->next)
+			ft_ps_error(data, UNDEFERR);
+	}
+	return (0);
+}
+
 // OPERATIONS.c
 int	ft_swap(t_node **stack)
 {
@@ -99,18 +136,6 @@ int	ft_ps_swap(t_node **stack, t_vars *data)
 		}
 	return(0);
 }
-
-// int	ft_sa(t_node **stack)
-// {
-// 	if (ft_swap(stack) == 1)
-// 	{
-// 		printf("sa\n");
-// 		return (1);
-// 	}
-// 	return (0);
-// }
-
-// CREATE ft_sb sa ss
 
 int	ft_rotate(t_node **stack)
 {
@@ -142,18 +167,6 @@ int	ft_ps_rot(t_node **stack, t_vars *data)
 		}
 	return(0);
 }
-
-// int	ft_ra(t_node **stack)
-// {
-// 	if (ft_rotate(stack) == 1)
-// 	{
-// 		printf("ra\n");
-// 		return (1);
-// 	}
-// 	return (0);
-// }
-
-// CREATE ft_rb rr
 
 int	ft_revrotate(t_node **stack)
 {

@@ -342,14 +342,15 @@ int	ft_ps_sort5(t_vars *data)
 {
 	int	a;
 	int	b;
+	int	minidx;
 
 	a = 5;
 	b = 0;
-	
+	minidx = -1;
 	while (a <= 3)
 	{
-		// minidx = getmin
-		// push minidx to satck_b
+		minidx = ft_ps_getminidx(data->sta, ft_lstsize((t_list *)data->sta));
+		ft_ps_pushidx(t_node **stack, minidx, t_vars *data);
 		--a;
 		++b;
 	}
