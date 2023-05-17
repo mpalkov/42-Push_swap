@@ -21,8 +21,8 @@
 # define SIZEFOR100 25
 # define SIZEFOR500 63
 
-// ASCEND - STACK B
-//DESCEND - STACK A
+// DESCEND 0 - STACK A - ascending stacknums starting from top to down
+// ASCEND 1 - STACK B - descending stacknums starting from top to down
 # define ASCEND 1
 # define DESCEND 0
 
@@ -38,14 +38,25 @@ enum // ERRORS
 
 typedef struct s_node
 {
+	struct s_node	*next;
 	int				nbr;
 	int				idx;
-	struct s_node	*next;
 	//	struct s_node	*prev;
 	// int				listsize;
 	// int				chunkid;
 	// int				chunksize;
 }				t_node;
+
+typedef struct s_chunk
+{
+	struct s_chunk	*next;
+//	t_node			*start;
+	size_t			len;
+//	int				in_stack;
+	int				maxidx;
+	int				minidx;
+	size_t			rra2do;
+}				t_chunk;
 
 typedef struct s_vars
 {
@@ -61,17 +72,6 @@ typedef struct s_vars
 	char	**argv;
 	int		errno; // see enum ERRORS
 }				t_vars;
-
-typedef struct s_chunk
-{
-//	t_node			*start;
-	size_t			len;
-//	int				in_stack;
-	int				maxidx;
-	int				minidx;
-	size_t			rra2do;
-	struct s_chunk	*next;
-}				t_chunk;
 
 // push-swap custom functions
 int		ft_addlast(t_node **stack, int n, t_vars *data);
@@ -101,5 +101,6 @@ int		ft_ps_rrot(t_node **stack, t_vars *data);
 int		ft_ps_push(t_node **from, t_node **to, t_vars *data);
 
 char	ft_ps_stacksel(t_node *stack, t_vars *data);
+int		ft_ps_ordersel(t_node *stack, t_vars *data);
 
 #endif

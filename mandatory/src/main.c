@@ -39,6 +39,8 @@ int	ft_ps_error(t_vars *data, int err)
 		exit(EXIT_FAILURE);
 }
 
+// ft_ps_getmin
+
 t_node	*ft_lst_getlast(t_node *stack)
 {
 	if (!stack)
@@ -149,9 +151,9 @@ int	ft_ps_data_null(t_vars *data)
 	data->arrayln = 0;
 	data->sta = NULL;
 	data->stb = NULL;
-	data->chunks_a = NULL;
+	// data->chunks_a = NULL;
 	data->chunks_b = NULL;
-	data->chnum_a = 0;
+	// data->chnum_a = 0;
 	data->chnum_b = 0;
 	data->argc = 0;
 	data->argv = NULL;
@@ -233,9 +235,9 @@ int	ft_ps_indexnodes(t_vars *data)
 // Check if indexes of 2 nodes are sorted in desired order
 int	ft_ps_inorder(t_node *cur, int order)
 {
-	if (order == 0 && cur->idx == cur->next->idx + 1)
+	if (order == DESCEND && cur->idx == cur->next->idx + 1)
 		return (1);
-	else if (order == 1 && cur->idx == cur->next->idx - 1)
+	else if (order == ASCEND && cur->idx == cur->next->idx - 1)
 		return (1);
 	return(0);
 }
@@ -264,67 +266,75 @@ int	ft_ps_sortedcheck(t_node *start, size_t len, int order, t_vars *data)
 			++i;
 		}
 		else
-			sorted = 0;
+			return (0);
 	}	
-	return (sorted);
+	return (1);
 }
 
 t_chunk	*ft_ps_topchunk(t_node *stack, t_vars *data)
 {
-	char	stack;
+	char	st;
 
-	stack = ft_ps_stacksel(stack, data);
-	if (stack == 'a' && data->chunks_a)
-		return (data->chunks_a);
-	if (stack == 'b' && data->chunks_b)
+	st = ft_ps_stacksel(stack, data);
+	//no chunks_a exist anymore
+	//if (stack == 'a' && data->chunks_a)
+	//	return (data->chunks_a);
+	if (st == 'b' && data->chunks_b)
 		return (data->chunks_b);
 	return (NULL);
 }
 
-int	ft_ps_handle2(t_node *stack, t_vars *data)
+int	ft_ps_handle2(t_node **stack, t_vars *data)
 {
 	int	issorted;
 	int	order;
 
 	issorted = 0;
-	order = ft_ps_ordersel(stack, data);
+	order = ft_ps_ordersel(*stack, data);
 	while (!issorted)
 	{
-		issorted = ft_ps_sortedcheck(stack, 2, order, data);
+		issorted = ft_ps_sortedcheck(*stack, 2, order, data);
 		if (issorted)
 			return (1);
 		else
-			ft_ps_swap(&stack, data);
+			ft_ps_swap(stack, data);
 	}	
 	return (0);
 }
 
-int	ft_ps_sort3(t_node *stack, int order, t_vars *data)
+int	ft_ps_sort3(t_node **stack, int order, t_vars *data)
 {
-	if (stack->idx == 3)
-		// Rotate (ra)
-	else if ((ft_lst_getlast(stack))->idx == 3)
-		// Swap (sa)
-	else if (stack->next->idx == 3)
-		//RevRotate (rra)
+	int	key;
+
+	if (order == DESCEND)
+		key = 1;
+	else
+		key = 3;
+
+	if ((*stack)->idx == key)
+		ft_ps_rot(stack, data);
+	else if ((ft_lst_getlast(*stack))->idx == key)
+		ft_ps_swap(stack, data);
+	else if ((*stack)->next->idx == key)
+		ft_ps_rrot(stack, data);
 	return(0);
 }
 
-int	ft_ps_handle3(t_node *stack, t_vars *data)
+int	ft_ps_handle3(t_node **stack, t_vars *data)
 {
 	int	issorted;
 	int	order;
 
 	issorted = 0;
-	order = ft_ps_ordersel(stack, data);
+	order = ft_ps_ordersel(*stack, data);
 	while (!issorted)
 	{
-		issorted = ft_ps_sortedcheck(stack, 3, order, data);
+		issorted = ft_ps_sortedcheck(*stack, 3, order, data);
 		if (issorted)
 			return (1);
 		else
 			ft_ps_sort3(stack, order, data);
-	}	
+	}
 	return (0);
 }
 
@@ -343,8 +353,8 @@ int	ft_ps_sort5(t_vars *data)
 		--a;
 		++b;
 	}
-	ft_ps_handle3(data->sta, data);
-	ft_ps_handle2(data->stb, data);
+	ft_ps_handle3(&data->sta, data);
+	ft_ps_handle2(&data->stb, data);
 	// pa pa
 	return (0);
 }
@@ -363,12 +373,10 @@ int	ft_ps_handle5(t_node *stack, t_vars *data)
 		if (issorted)
 			return (1);
 		else
-			ft_ps_sort5(stack, data);
+			ft_ps_sort5(data);
 	}
 	return (0);
 }
-
-
 
 int ft_ps_sorting(t_vars *data)
 {
@@ -376,9 +384,9 @@ int ft_ps_sorting(t_vars *data)
 
 	len = data->arrayln;
 	if (len == 2)
-		ft_ps_handle2(data->sta, DESCEND, data);
+		ft_ps_handle2(&data->sta, data);
 	else if (len == 3)
-		ft_ps_handle3(data->sta, DESCEND, data);
+		ft_ps_handle3(&data->sta, data);
 	// else if (len <= 5)
 	// 	ft_ps_handle5();
 	// else if (len <= 100)
@@ -458,5 +466,6 @@ int	main(int argc, char **argv)
 	// 	printf("\nb: ");
 	// 	ft_lstiter(sta, ft_printf_int);
 	// 	printf("\n\n");
+	printf("FIISHED OK\n");
 	return (0);
 }

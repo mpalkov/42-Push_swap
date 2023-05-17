@@ -182,7 +182,7 @@ int	ft_ps_rrot(t_node **stack, t_vars *data)
 	return(0);
 }
 
-int	ft_push(t_node **from, t_node **to, t_vars *data)
+int	ft_push(t_node **from, t_node **to)
 {
 //	t_node	*tmp1;
 	t_node	*tmp2;
