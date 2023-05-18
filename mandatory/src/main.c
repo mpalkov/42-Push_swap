@@ -306,11 +306,9 @@ int	ft_ps_sort3(t_node **stack, int order, t_vars *data)
 {
 	unsigned int	key;
 
+	key = ft_ps_getmaxidx(data->sta, ft_lstsize((t_list *)data->sta));
 	if (order == DESCEND)
-		key = 1;
-	else
-		key = 3;
-
+		key -= 2;
 	if ((*stack)->idx == key)
 		ft_ps_rot(stack, data);
 	else if ((ft_lst_getlast(*stack))->idx == key)

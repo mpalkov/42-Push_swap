@@ -122,6 +122,18 @@ int	ft_ps_pushidx(t_node **stack, unsigned int idx, t_vars *data)
 			ft_ps_push(stack, to, data);
 			return (1);
 		}
+		else if ((*stack)->next && (*stack)->next->idx == idx)
+		{
+			ft_ps_rot(stack, data);
+			ft_ps_push(stack, to, data);
+			return (1);
+		}
+		else if ((ft_lst_getlast(*stack))->idx == idx)
+			{
+				ft_ps_rrot(stack, data);
+				ft_ps_push(stack, to, data);
+				return (1);
+			}
 		else if ((*stack)->next)
 			ft_ps_rot(stack, data);
 		else if (!(*stack)->next)
