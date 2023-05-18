@@ -84,7 +84,7 @@ int	ft_addlast(t_node **stack, int n, t_vars *data)
 t_node	*ft_init_stack(t_vars *data)
 {
 	t_node	*stack;
-	size_t	i;
+	unsigned int	i;
 	
 	i = 0;
 	stack = NULL;
@@ -96,11 +96,11 @@ t_node	*ft_init_stack(t_vars *data)
 // sta == stack_a
 // stb == stack_b
 
-int	ft_fillarr(int *array, size_t len, char **str, t_vars *data)
+int	ft_fillarr(int *array, unsigned int len, char **str, t_vars *data)
 {
-	// int *array, size_t len, char **str
+	// int *array, unsigned int len, char **str
 	// data->sortedarray, data->arrayln, argv
-	size_t	i;
+	unsigned int	i;
 
 	i = 0;
 	while (i < len)
@@ -121,11 +121,11 @@ int	ft_swap_ints(int *a, int *b)
 	return (1);
 }
 
-int	ft_selection_sort(int *array, size_t len)
+int	ft_selection_sort(int *array, unsigned int len)
 {
-	size_t	i;
-	size_t	j;
-	size_t	idx;
+	unsigned int	i;
+	unsigned int	j;
+	unsigned int	idx;
 
 	i = 0;
 	while (i < len)
@@ -176,10 +176,10 @@ int	ft_ps_initdata(int argc, char **argv, t_vars *data)
 }
 
 // CHECK IF NUMREPEATS WITHIN ISSORTED CHECK
-int	ft_ps_numrepeats(int *array, size_t len, t_vars *data)
+int	ft_ps_numrepeats(int *array, unsigned int len, t_vars *data)
 {
-	size_t	i;
-	size_t	j;
+	unsigned int	i;
+	unsigned int	j;
 
 	i = 0;
 	j = 1;
@@ -197,9 +197,9 @@ int	ft_ps_numrepeats(int *array, size_t len, t_vars *data)
 	return (0);
 }
 
-int	ft_ps_issorted(int *array, size_t len, t_vars *data)
+int	ft_ps_issorted(int *array, unsigned int len, t_vars *data)
 {
-	size_t	i;
+	unsigned int	i;
 
 	i = 0;
 	while (i < len - 1)
@@ -215,7 +215,7 @@ int	ft_ps_issorted(int *array, size_t len, t_vars *data)
 
 int	ft_ps_indexnodes(t_vars *data)
 {
-	size_t	i;
+	unsigned int	i;
 	int		*arr;
 	t_node	*tmp;
 
@@ -246,9 +246,9 @@ int	ft_ps_inorder(t_node *cur, int order)
 //ORDER 1 == ASCENDING	(WHEN SORTED IN STACK B)
 //len - length to check-sort from start
 //(start == 1, to compare start + 1 len == 2)
-int	ft_ps_sortedcheck(t_node *start, size_t len, int order, t_vars *data)
+int	ft_ps_sortedcheck(t_node *start, unsigned int len, int order, t_vars *data)
 {
-	size_t	i;
+	unsigned int	i;
 	t_node	*cur;
 	int		sorted;
 
@@ -304,7 +304,7 @@ int	ft_ps_handle2(t_node **stack, t_vars *data)
 
 int	ft_ps_sort3(t_node **stack, int order, t_vars *data)
 {
-	int	key;
+	unsigned int	key;
 
 	if (order == DESCEND)
 		key = 1;
@@ -342,15 +342,15 @@ int	ft_ps_sort5(t_vars *data)
 {
 	int	a;
 	int	b;
-	int	minidx;
+	int	maxidx;
 
 	a = 5;
 	b = 0;
-//	minidx = INT_MAX;
+//	maxidx = INT_MAX;
 	while (a >= 3)
 	{
-		minidx = ft_ps_getminidx(data->sta, ft_lstsize((t_list *)data->sta));
-		ft_ps_pushidx(&data->sta, minidx, data);
+		maxidx = ft_ps_getmaxidx(data->sta, ft_lstsize((t_list *)data->sta));
+		ft_ps_pushidx(&data->sta, maxidx, data);
 		--a;
 		++b;
 	}
@@ -361,7 +361,6 @@ int	ft_ps_sort5(t_vars *data)
 		ft_ps_push(&data->stb, &data->sta, data);
 	return (0);
 }
-
 
 int	ft_ps_handle5(t_node **stack, t_vars *data)
 {
@@ -383,7 +382,7 @@ int	ft_ps_handle5(t_node **stack, t_vars *data)
 
 int ft_ps_sorting(t_vars *data)
 {
-	size_t	len;
+	unsigned int	len;
 
 	len = data->arrayln;
 	if (len == 2)

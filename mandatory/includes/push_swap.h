@@ -41,7 +41,7 @@ typedef struct s_node
 {
 	struct s_node	*next;
 	int				nbr;
-	int				idx;
+	unsigned int	idx;
 	//	struct s_node	*prev;
 	// int				listsize;
 	// int				chunkid;
@@ -52,26 +52,26 @@ typedef struct s_chunk
 {
 	struct s_chunk	*next;
 //	t_node			*start;
-	size_t			len;
+	unsigned int	len;
 //	int				in_stack;
 	int				maxidx;
 	int				minidx;
-	size_t			rra2do;
+	unsigned int	rra2do;
 }				t_chunk;
 
 typedef struct s_vars
 {
-	int		*sortedarray;
-	size_t	arrayln;
-	t_node	*sta;
-	t_node	*stb;
-//	size_t	chnum_a;
-	size_t	chnum_b;
+	int				*sortedarray;
+	unsigned int	arrayln;
+	t_node			*sta;
+	t_node			*stb;
+//	size_t			chnum_a;
+	int				chnum_b;
 //	t_chunk	*chunks_a;
-	t_chunk	*chunks_b;
-	int		argc;
-	char	**argv;
-	int		errno; // see enum ERRORS
+	t_chunk			*chunks_b;
+	int				argc;
+	char			**argv;
+	int				errno; // see enum ERRORS
 }				t_vars;
 
 // push-swap custom functions
@@ -86,11 +86,12 @@ int		ft_ps_printerr(int err);
 int		ft_ps_error(t_vars *data, int err);
 
 // list_tools.h - can be added to the libft maybe?
-t_node	*ft_lst_getlast(t_node *stack);
-t_node	*ft_lst_getprelast(t_node *stack);
-t_node	*ft_ps_lstfind(t_node *lst, int key);
-int		ft_ps_getminidx(t_node *stack, int len);
-int		ft_ps_pushidx(t_node **stack, int idx, t_vars *data);
+t_node			*ft_lst_getlast(t_node *stack);
+t_node			*ft_lst_getprelast(t_node *stack);
+t_node			*ft_ps_lstfind(t_node *lst, int key);
+unsigned int	ft_ps_getminidx(t_node *stack, unsigned int len);
+unsigned int	ft_ps_getmaxidx(t_node *stack, unsigned int len);
+int				ft_ps_pushidx(t_node **stack, unsigned int idx, t_vars *data);
 
 // operations.h
 int		ft_swap(t_node **stack);

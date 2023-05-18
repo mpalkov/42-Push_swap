@@ -71,23 +71,39 @@ int	ft_ps_ordersel(t_node *stack, t_vars *data)
 	return(0);
 }
 
-int	ft_ps_getminidx(t_node *stack, int len)
+unsigned int	ft_ps_getminidx(t_node *stack, unsigned int len)
 {
-	int	minidx;
+	unsigned int	min;
 	
-	minidx = INT_MAX;
+	min = UINT_MAX;
 	while (len > 0)
 	{
-		if (minidx > stack->idx)
-			minidx = stack->idx;
+		if (min > stack->idx)
+			min = stack->idx;
 		if (stack->next)
 			stack = stack->next;
 		--len;
 	}
-	return (minidx);
+	return (min);
 }
 
-int	ft_ps_pushidx(t_node **stack, int idx, t_vars *data)
+unsigned int	ft_ps_getmaxidx(t_node *stack, unsigned int len)
+{
+	unsigned int	max;
+	
+	max = 0;
+	while (len > 0)
+	{
+		if (max < stack->idx)
+			max = stack->idx;
+		if (stack->next)
+			stack = stack->next;
+		--len;
+	}
+	return (max);
+}
+
+int	ft_ps_pushidx(t_node **stack, unsigned int idx, t_vars *data)
 {
 	t_node **to;
 
