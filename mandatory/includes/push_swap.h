@@ -22,8 +22,8 @@
 # define SIZEFOR100 25
 # define SIZEFOR500 63
 
-// DESCEND 0 - STACK A - ascending stacknums starting from top to down
-// ASCEND 1 - STACK B - descending stacknums starting from top to down
+// ASCEND 1 - STACK A - descending stacknums starting from top to down
+// DESCEND 0 - STACK B - ascending stacknums starting from top to down
 # define ASCEND 1
 # define DESCEND 0
 
@@ -42,6 +42,7 @@ typedef struct s_node
 	struct s_node	*next;
 	int				nbr;
 	unsigned int	idx;
+	unsigned int	cost;
 	//	struct s_node	*prev;
 	// int				listsize;
 	// int				chunkid;

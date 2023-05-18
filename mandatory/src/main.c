@@ -224,7 +224,7 @@ int	ft_ps_indexnodes(t_vars *data)
 	while(i <= data->arrayln)
 	{
 		tmp = NULL;
-		tmp = ft_ps_lstfind(data->sta, arr[data->arrayln - i]);
+		tmp = ft_ps_lstfind(data->sta, arr[i - 1]);
 		if (tmp)
 			tmp->idx = i;
 		++i;
@@ -235,15 +235,15 @@ int	ft_ps_indexnodes(t_vars *data)
 // Check if indexes of 2 nodes are sorted in desired order
 int	ft_ps_inorder(t_node *cur, int order)
 {
-	if (order == DESCEND && cur->idx == cur->next->idx + 1)
+	if (order == ASCEND && cur->idx == cur->next->idx - 1)
 		return (1);
-	else if (order == ASCEND && cur->idx == cur->next->idx - 1)
+	else if (order == DESCEND && cur->idx == cur->next->idx + 1)
 		return (1);
 	return(0);
 }
 
-//ORDER 0 == DESCENDING	(WHEN SORTED IN STACK A)
-//ORDER 1 == ASCENDING	(WHEN SORTED IN STACK B)
+//ORDER 1 == ASCENDING	(WHEN SORTED IN STACK A)
+//ORDER 0 == DESCENDING	(WHEN SORTED IN STACK B)
 //len - length to check-sort from start
 //(start == 1, to compare start + 1 len == 2)
 int	ft_ps_sortedcheck(t_node *start, unsigned int len, int order, t_vars *data)
@@ -343,14 +343,18 @@ int	ft_ps_sort5(t_vars *data)
 	int	a;
 	int	b;
 	int	maxidx;
+	int	minidx;
+
+	// CHUNK_B rank 
 
 	a = 5;
 	b = 0;
 //	maxidx = INT_MAX;
-	while (a >= 3)
+	while (a > 3)
 	{
 		maxidx = ft_ps_getmaxidx(data->sta, ft_lstsize((t_list *)data->sta));
-		ft_ps_pushidx(&data->sta, maxidx, data);
+		minidx = ft_ps_getminidx(data->sta, ft_lstsize((t_list *)data->sta));
+		ft_ps_pushidx(&data->sta, minidx, data);
 		--a;
 		++b;
 	}
@@ -368,7 +372,7 @@ int	ft_ps_handle5(t_node **stack, t_vars *data)
 	int	order;
 
 	issorted = 0;
-	order = DESCEND;
+	order = ASCEND;
 	while (!issorted)
 	{
 		issorted = ft_ps_sortedcheck(*stack, 5, order, data);

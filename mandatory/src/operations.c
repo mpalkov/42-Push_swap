@@ -64,9 +64,9 @@ int	ft_ps_ordersel(t_node *stack, t_vars *data)
 
 	st = ft_ps_stacksel(stack, data);
 	if (st == 'a')
-		return (DESCEND);
-	if (st == 'b')
 		return (ASCEND);
+	if (st == 'b')
+		return (DESCEND);
 	ft_ps_error(data, UNDEFERR);
 	return(0);
 }
