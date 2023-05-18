@@ -142,6 +142,63 @@ int	ft_ps_pushidx(t_node **stack, unsigned int idx, t_vars *data)
 	return (0);
 }
 
+int	ft_ps_pushidx100(t_node **stack, unsigned int idx, t_vars *data)
+{
+	t_node 			**to;
+	unsigned int	i;
+	unsigned int	stacklen = ft_lstsize((t_list *)(*stack));
+	t_node			*cur;
+
+	to = NULL;
+	i = 0;
+	cur = *stack;
+	if (ft_ps_stacksel(*stack, data) == 'a')
+		to = &data->stb;
+	else if (ft_ps_stacksel(*stack, data) == 'b')
+		to = &data->sta;
+	else
+		ft_ps_error(data, UNDEFERR);
+	if (*stack && (*stack)->idx == idx)
+		{
+			ft_ps_push(stack, to, data);
+			return (1);
+		}
+	while (cur && i < (stacklen / 2) + 1)
+	{
+		cur = cur->next;
+		++i;
+		if (cur && (cur)->idx == idx)
+		{
+			while (i--)
+				ft_ps_rot(stack, data);
+			ft_ps_push(stack, to, data);
+			return (1);
+		}
+		else
+			while (i--)
+			{
+				
+			}
+		if ((*stack)->next && (*stack)->next->idx == idx)
+		{
+			ft_ps_rot(stack, data);
+			ft_ps_push(stack, to, data);
+			return (1);
+		}
+		else if ((ft_lst_getlast(*stack))->idx == idx)
+		{
+			ft_ps_rrot(stack, data);
+			ft_ps_push(stack, to, data);
+			return (1);
+		}
+		else if ((*stack)->next)
+			ft_ps_rot(stack, data);
+		else if (!(*stack)->next)
+			ft_ps_error(data, UNDEFERR);
+	}
+	return (0);
+}
+
 // OPERATIONS.c
 int	ft_swap(t_node **stack)
 {
