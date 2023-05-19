@@ -383,24 +383,27 @@ int	ft_ps_sort100(t_vars *data)
 {
 	int	a;
 	int	b;
-	int	maxidx;
-	int	minidx;
+	//int	maxidx;
+	//int	minidx;
 
 	a = ft_lstsize((t_list *)data->sta);
 	b = 0;
 	while (a > 3)
 	{
-		maxidx = ft_ps_getmaxidx(data->sta, ft_lstsize((t_list *)data->sta));
-		minidx = ft_ps_getminidx(data->sta, ft_lstsize((t_list *)data->sta));
-		ft_ps_pushifrange(&data->sta, SIZEFOR100, data);
+		if (b == SIZEFOR100)
+			b = 0;
+	//	maxidx = ft_ps_getmaxidx(data->sta, ft_lstsize((t_list *)data->sta));
+	//	minidx = ft_ps_getminidx(data->sta, ft_lstsize((t_list *)data->sta));
+		ft_ps_pushifrange(&data->sta, SIZEFOR100 - b, data);
 		--a;
 		++b;
 	}
 	ft_ps_handle3(&data->sta, data);
 
 	//GET BACK NUMBERS IN CORRECT ORDER TO STACK A
-	while (b--)
-		ft_ps_push(&data->stb, data);
+	//while (b--)
+		// find max in B, put it on top of B and push it to A
+		// ft_ps_push(&data->stb, data);
 	return (0);
 }
 

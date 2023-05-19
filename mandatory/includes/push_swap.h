@@ -18,8 +18,10 @@
 # include "libft.h"
 // # include <errno.h>	// errors
 
+# define UINT unsigned int
+
 //define chunk size for stack less than 100 or less than 500 numbers
-# define SIZEFOR100 25
+# define SIZEFOR100 5
 # define SIZEFOR500 63
 
 // ASCEND 1 - STACK A - descending stacknums starting from top to down
@@ -87,13 +89,14 @@ int		ft_ps_printerr(int err);
 int		ft_ps_error(t_vars *data, int err);
 
 // list_tools.h - can be added to the libft maybe?
-t_node			*ft_lst_getlast(t_node *stack);
-t_node			*ft_lst_getprelast(t_node *stack);
-t_node			*ft_ps_lstfind(t_node *lst, int key);
-unsigned int	ft_ps_getminidx(t_node *stack, unsigned int len);
-unsigned int	ft_ps_getmaxidx(t_node *stack, unsigned int len);
-int				ft_ps_pushidx(t_node **stack, unsigned int idx, t_vars *data);
-int				ft_ps_pushidx100(t_node **stack, unsigned int idx, t_vars *data);
+t_node	*ft_lst_getlast(t_node *stack);
+t_node	*ft_lst_getprelast(t_node *stack);
+t_node	*ft_ps_lstfind(t_node *lst, int key);
+UINT	ft_ps_getminidx(t_node *stack, unsigned int len);
+UINT	ft_ps_getmaxidx(t_node *stack, unsigned int len);
+int		ft_ps_pushidx(t_node **stack, unsigned int idx, t_vars *data);
+int		ft_ps_pushidx100(t_node **stack, unsigned int idx, t_vars *data);
+int		ft_ps_pushifrange(t_node **stack, UINT chunksize, t_vars *data);
 
 // operations.h
 int		ft_swap(t_node **stack);

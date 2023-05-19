@@ -134,7 +134,7 @@ int	ft_ps_pushidx(t_node **stack, unsigned int idx, t_vars *data)
 
 // MAXIDX - max index of the actual chunk.
 // THE MINIDX for actual chunk will be always the lowest of the whole stack A
-int	ft_ps_pushidxBIG(t_node **stack, unsigned int chunksize, t_vars *data)
+int	ft_ps_pushifrange(t_node **stack, unsigned int chunksize, t_vars *data)
 {
 	unsigned int	i;
 	unsigned int	j;
@@ -149,21 +149,26 @@ int	ft_ps_pushidxBIG(t_node **stack, unsigned int chunksize, t_vars *data)
 	curt = *stack;
 	curb = ft_lst_getlast(*stack);
 	minidx = ft_ps_getminidx(*stack, data->arrayln);
-	maxidx = minidx + chunksize + 1;
-	
+	if (chunksize > stacklen)
+		chunksize = stacklen;
+	maxidx = minidx + chunksize - 1;
 	if (*stack && (*stack)->idx >= minidx && (*stack)->idx <= maxidx)
 	{
+		// write another push which decides if pb rb (smaller half of chunk) OR pb only (bigger half of chunk)
 		ft_ps_push(stack, data);
 		return (1);
 	}
-	while (curt && ++i < stacklen)
+	while (curt && ++i <= stacklen / 2 + 1)
 	{
 		//check i from top
 		curt = curt->next;
 		if (curt && (curt)->idx >= minidx && (curt)->idx <= maxidx)
 		{
-			while (i--)
+			while (i > 0)
+			{
 				ft_ps_rot(stack, data);
+				--i;
+			}
 			// write another push which decides if pb rb (smaller half of chunk) OR pb only (bigger half of chunk)
 			ft_ps_push(stack, data);
 			return (1);
@@ -171,13 +176,13 @@ int	ft_ps_pushidxBIG(t_node **stack, unsigned int chunksize, t_vars *data)
 		//check i from bottom
 		else
 		{
-			j = i - 1;
-			curb = *stack;
-			while (stacklen - j-- >= 0 && curb->next)
+			j = 0;
+			curb = curt;
+			while (j++ < stacklen - i && curb->next)
 				curb = curb->next;
 			if (curb && (curb)->idx >= minidx && (curb)->idx <= maxidx)
 			{
-				while (++j <= stacklen)
+				while (j-- < 0)
 					ft_ps_rrot(stack, data);
 				ft_ps_push(stack, data);
 				return (1);
