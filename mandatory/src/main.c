@@ -343,11 +343,8 @@ int	ft_ps_sort5(t_vars *data)
 	int	maxidx;
 	int	minidx;
 
-	// CHUNK_B rank 
-
 	a = 5;
 	b = 0;
-//	maxidx = INT_MAX;
 	while (a > 3)
 	{
 		maxidx = ft_ps_getmaxidx(data->sta, ft_lstsize((t_list *)data->sta));
@@ -360,7 +357,7 @@ int	ft_ps_sort5(t_vars *data)
 	if (b == 2)
 		ft_ps_handle2(&data->sta, data);
 	while (b--)
-		ft_ps_push(&data->stb, &data->sta, data);
+		ft_ps_push(&data->stb, data);
 	return (0);
 }
 
@@ -382,6 +379,49 @@ int	ft_ps_handle5(t_node **stack, t_vars *data)
 	return (0);
 }
 
+int	ft_ps_sort100(t_vars *data)
+{
+	int	a;
+	int	b;
+	int	maxidx;
+	int	minidx;
+
+	a = ft_lstsize((t_list *)data->sta);
+	b = 0;
+	while (a > 3)
+	{
+		maxidx = ft_ps_getmaxidx(data->sta, ft_lstsize((t_list *)data->sta));
+		minidx = ft_ps_getminidx(data->sta, ft_lstsize((t_list *)data->sta));
+		ft_ps_pushifrange(&data->sta, SIZEFOR100, data);
+		--a;
+		++b;
+	}
+	ft_ps_handle3(&data->sta, data);
+
+	//GET BACK NUMBERS IN CORRECT ORDER TO STACK A
+	while (b--)
+		ft_ps_push(&data->stb, data);
+	return (0);
+}
+
+int	ft_ps_handle100(t_node **stack, t_vars *data)
+{
+	int	issorted;
+	int	order;
+
+	issorted = 0;
+	order = ASCEND;
+	while (!issorted)
+	{
+		issorted = ft_ps_sortedcheck(*stack, 0, order, data);
+		if (issorted)
+			return (1);
+		else
+			ft_ps_sort100(data);
+	}
+	return (0);
+}
+
 int ft_ps_sorting(t_vars *data)
 {
 	unsigned int	len;
@@ -393,8 +433,8 @@ int ft_ps_sorting(t_vars *data)
 		ft_ps_handle3(&data->sta, data);
 	else if (len <= 5)
 	 	ft_ps_handle5(&data->sta, data);
-	// else if (len <= 100)
-	// 	ft_ps_handle100();
+	else if (len <= 100)
+	 	ft_ps_handle100(&data->sta, data);
 	// else if (len > 100)
 	// 	ft_ps_handle500();
 	return (0);

@@ -104,7 +104,7 @@ int		ft_push(t_node **from, t_node **to);
 int		ft_ps_swap(t_node **stack, t_vars *data);
 int		ft_ps_rot(t_node **stack, t_vars *data);
 int		ft_ps_rrot(t_node **stack, t_vars *data);
-int		ft_ps_push(t_node **from, t_node **to, t_vars *data);
+int		ft_ps_push(t_node **from, t_vars *data);
 
 char	ft_ps_stacksel(t_node *stack, t_vars *data);
 int		ft_ps_ordersel(t_node *stack, t_vars *data);

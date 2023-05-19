@@ -76,7 +76,7 @@ unsigned int	ft_ps_getminidx(t_node *stack, unsigned int len)
 	unsigned int	min;
 	
 	min = UINT_MAX;
-	while (len > 0)
+	while (len > 0 && stack)
 	{
 		if (min > stack->idx)
 			min = stack->idx;
@@ -105,33 +105,23 @@ unsigned int	ft_ps_getmaxidx(t_node *stack, unsigned int len)
 
 int	ft_ps_pushidx(t_node **stack, unsigned int idx, t_vars *data)
 {
-	t_node **to;
-
-	to = NULL;
-	if (ft_ps_stacksel(*stack, data) == 'a')
-		to = &data->stb;
-	else if (ft_ps_stacksel(*stack, data) == 'b')
-		to = &data->sta;
-	else
-		ft_ps_error(data, UNDEFERR);
-	
 	while (*stack)
 	{
 		if ((*stack)->idx == idx)
 		{
-			ft_ps_push(stack, to, data);
+			ft_ps_push(stack, data);
 			return (1);
 		}
 		else if ((*stack)->next && (*stack)->next->idx == idx)
 		{
 			ft_ps_rot(stack, data);
-			ft_ps_push(stack, to, data);
+			ft_ps_push(stack, data);
 			return (1);
 		}
 		else if ((ft_lst_getlast(*stack))->idx == idx)
 			{
 				ft_ps_rrot(stack, data);
-				ft_ps_push(stack, to, data);
+				ft_ps_push(stack, data);
 				return (1);
 			}
 		else if ((*stack)->next)
@@ -142,59 +132,57 @@ int	ft_ps_pushidx(t_node **stack, unsigned int idx, t_vars *data)
 	return (0);
 }
 
-int	ft_ps_pushidx100(t_node **stack, unsigned int idx, t_vars *data)
+// MAXIDX - max index of the actual chunk.
+// THE MINIDX for actual chunk will be always the lowest of the whole stack A
+int	ft_ps_pushidxBIG(t_node **stack, unsigned int chunksize, t_vars *data)
 {
-	t_node 			**to;
 	unsigned int	i;
+	unsigned int	j;
 	unsigned int	stacklen = ft_lstsize((t_list *)(*stack));
-	t_node			*cur;
+	t_node			*curt; //current topnode
+	t_node			*curb; //current bottomnode
+	unsigned int	minidx;
+	unsigned int	maxidx;
 
-	to = NULL;
 	i = 0;
-	cur = *stack;
-	if (ft_ps_stacksel(*stack, data) == 'a')
-		to = &data->stb;
-	else if (ft_ps_stacksel(*stack, data) == 'b')
-		to = &data->sta;
-	else
-		ft_ps_error(data, UNDEFERR);
-	if (*stack && (*stack)->idx == idx)
-		{
-			ft_ps_push(stack, to, data);
-			return (1);
-		}
-	while (cur && i < (stacklen / 2) + 1)
+	j = 0;
+	curt = *stack;
+	curb = ft_lst_getlast(*stack);
+	minidx = ft_ps_getminidx(*stack, data->arrayln);
+	maxidx = minidx + chunksize + 1;
+	
+	if (*stack && (*stack)->idx >= minidx && (*stack)->idx <= maxidx)
 	{
-		cur = cur->next;
-		++i;
-		if (cur && (cur)->idx == idx)
+		ft_ps_push(stack, data);
+		return (1);
+	}
+	while (curt && ++i < stacklen)
+	{
+		//check i from top
+		curt = curt->next;
+		if (curt && (curt)->idx >= minidx && (curt)->idx <= maxidx)
 		{
 			while (i--)
 				ft_ps_rot(stack, data);
-			ft_ps_push(stack, to, data);
+			// write another push which decides if pb rb (smaller half of chunk) OR pb only (bigger half of chunk)
+			ft_ps_push(stack, data);
 			return (1);
 		}
+		//check i from bottom
 		else
-			while (i--)
+		{
+			j = i - 1;
+			curb = *stack;
+			while (stacklen - j-- >= 0 && curb->next)
+				curb = curb->next;
+			if (curb && (curb)->idx >= minidx && (curb)->idx <= maxidx)
 			{
-				
+				while (++j <= stacklen)
+					ft_ps_rrot(stack, data);
+				ft_ps_push(stack, data);
+				return (1);
 			}
-		if ((*stack)->next && (*stack)->next->idx == idx)
-		{
-			ft_ps_rot(stack, data);
-			ft_ps_push(stack, to, data);
-			return (1);
 		}
-		else if ((ft_lst_getlast(*stack))->idx == idx)
-		{
-			ft_ps_rrot(stack, data);
-			ft_ps_push(stack, to, data);
-			return (1);
-		}
-		else if ((*stack)->next)
-			ft_ps_rot(stack, data);
-		else if (!(*stack)->next)
-			ft_ps_error(data, UNDEFERR);
 	}
 	return (0);
 }
@@ -300,16 +288,51 @@ int	ft_push(t_node **from, t_node **to)
 	return (1);
 }
 
-int	ft_ps_push(t_node **from, t_node **to, t_vars *data)
+t_node	**ft_ps_pushsel(t_node *from, char *to, t_vars *data)
+{
+	if (ft_ps_stacksel(from, data) == 'a')
+	{
+		*to = 'b';
+		return (&data->stb);
+	}
+	else if (ft_ps_stacksel(from, data) == 'b')
+	{
+		*to = 'a';
+		return (&data->stb);
+	}
+	else
+		ft_ps_error(data, UNDEFERR);
+	return (NULL);
+}
+
+int	ft_ps_push(t_node **from, t_vars *data)
 {
 	char	sel;
+	t_node	**to;
 
-	sel = ft_ps_stacksel(*to, data);
+	to = ft_ps_pushsel(*from, &sel, data);
 	if (ft_push(from, to))
-		{
-			if (printf("p%c\n", sel) < 0)
-				ft_ps_error(data, WRITEERR);
-			return (1);
-		}
+	{
+		if (printf("p%c\n", sel) < 0)
+			ft_ps_error(data, WRITEERR);
+		return (1);
+	}
+	return (0);
+}
+
+int	ft_ps_pushrange(t_node **from, unsigned int minidx, unsigned int chunksize, t_vars *data)
+{
+	unsigned int	maxidx;
+
+	maxidx = minidx + chunksize + 1;
+	if ((*from)->idx >= minidx && (*from)->idx < minidx + chunksize / 2)
+	{
+		ft_ps_push(from, data);
+		ft_ps_rot(&data->stb, data);
+	}
+	else if ((*from)->idx >= minidx + chunksize / 2 && (*from)->idx <= maxidx)
+		ft_ps_push(from, data);
+	else
+		ft_ps_error(data, UNDEFERR);
 	return (0);
 }
