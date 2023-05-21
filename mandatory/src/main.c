@@ -158,6 +158,7 @@ int	ft_ps_data_null(t_vars *data)
 	data->argc = 0;
 	data->argv = NULL;
 	data->errno = 0;
+	data->chunksize = 0;
 	return (1);
 }
 
@@ -340,14 +341,14 @@ int	ft_ps_sort5(t_vars *data)
 {
 	int	a;
 	int	b;
-	int	maxidx;
+	// int	maxidx;
 	int	minidx;
 
 	a = 5;
 	b = 0;
 	while (a > 3)
 	{
-		maxidx = ft_ps_getmaxidx(data->sta, ft_lstsize((t_list *)data->sta));
+		// maxidx = ft_ps_getmaxidx(data->sta, ft_lstsize((t_list *)data->sta));
 		minidx = ft_ps_getminidx(data->sta, ft_lstsize((t_list *)data->sta));
 		ft_ps_pushidx(&data->sta, minidx, data);
 		--a;
@@ -386,6 +387,7 @@ int	ft_ps_sort100(t_vars *data)
 	//int	maxidx;
 	//int	minidx;
 
+	data->chunksize = SIZEFOR100;
 	a = ft_lstsize((t_list *)data->sta);
 	b = 0;
 	while (a > 3)
@@ -399,7 +401,7 @@ int	ft_ps_sort100(t_vars *data)
 		++b;
 	}
 	ft_ps_handle3(&data->sta, data);
-
+	
 	//GET BACK NUMBERS IN CORRECT ORDER TO STACK A
 	//while (b--)
 		// find max in B, put it on top of B and push it to A

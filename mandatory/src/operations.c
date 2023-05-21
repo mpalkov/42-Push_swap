@@ -152,17 +152,19 @@ int	ft_ps_pushifrange(t_node **stack, unsigned int chunksize, t_vars *data)
 	if (chunksize > stacklen)
 		chunksize = stacklen;
 	maxidx = minidx + chunksize - 1;
-	if (*stack && (*stack)->idx >= minidx && (*stack)->idx <= maxidx)
+	if (*stack && (*stack)->idx >= minidx && (*stack)->idx <= maxidx && \
+		(*stack)->idx < data->arrayln - 2)
 	{
 		// write another push which decides if pb rb (smaller half of chunk) OR pb only (bigger half of chunk)
-		ft_ps_push(stack, data);
+		//ft_ps_push(stack, data);
+		ft_ps_pushrange (stack, minidx, data->chunksize, data);
 		return (1);
 	}
 	while (curt && ++i <= stacklen / 2 + 1)
 	{
 		//check i from top
 		curt = curt->next;
-		if (curt && (curt)->idx >= minidx && (curt)->idx <= maxidx)
+		if (curt && (curt)->idx >= minidx && (curt)->idx <= maxidx && (curt)->idx < data->arrayln - 2)
 		{
 			while (i > 0)
 			{
@@ -170,7 +172,7 @@ int	ft_ps_pushifrange(t_node **stack, unsigned int chunksize, t_vars *data)
 				--i;
 			}
 			// write another push which decides if pb rb (smaller half of chunk) OR pb only (bigger half of chunk)
-			ft_ps_push(stack, data);
+			ft_ps_pushrange (stack, minidx, data->chunksize, data);
 			return (1);
 		}
 		//check i from bottom
@@ -180,11 +182,11 @@ int	ft_ps_pushifrange(t_node **stack, unsigned int chunksize, t_vars *data)
 			curb = curt;
 			while (j++ < stacklen - i && curb->next)
 				curb = curb->next;
-			if (curb && (curb)->idx >= minidx && (curb)->idx <= maxidx)
+			if (curb && (curb)->idx >= minidx && (curb)->idx <= maxidx && (curb)->idx < data->arrayln - 2)
 			{
-				while (j-- < 0)
+				while (stacklen - j++ > 0)
 					ft_ps_rrot(stack, data);
-				ft_ps_push(stack, data);
+				ft_ps_pushrange (stack, minidx, data->chunksize, data);
 				return (1);
 			}
 		}
@@ -325,19 +327,42 @@ int	ft_ps_push(t_node **from, t_vars *data)
 	return (0);
 }
 
-int	ft_ps_pushrange(t_node **from, unsigned int minidx, unsigned int chunksize, t_vars *data)
+int	ft_ps_backtoa(t_vars *data)
 {
-	unsigned int	maxidx;
+	//if it is THE number, push to B
 
-	maxidx = minidx + chunksize + 1;
-	if ((*from)->idx >= minidx && (*from)->idx < minidx + chunksize / 2)
+	//else search for THE number
+	// max. SIZEFOR100 from top and SIZEFOR100 from bottom (cant be more numbers)
+	// not SIZEFOR100 / 2, because if they are in order, they will be together.
+	// push to A.
+	return (1);
+}
+
+//chunksize is actual chunk size, not theoretical chunk size. Gets smaller by every push.
+int	ft_ps_pushrange(t_node **from, UINT minidx, UINT chunksize, t_vars *data)
+{
+	UINT	maxidx;
+	t_node	*b;
+
+	maxidx = minidx + chunksize - 1;
+	b = data->stb;
+	if (maxidx > data->arrayln)
+		chunksize -= (data->arrayln - 3) % chunksize;
+	//if the idx to push is the next bigger than topB, dont rotate, just push on top of B and it will be already sorted there.
+	if (b && b->idx == (*from)->idx - 1)
+	{
+		ft_ps_push(from, data);
+		return (1);
+	}
+	//else do the usual evaluation (biiger half on top, smaller half on bottom)
+	if ((*from)->idx >= minidx && (*from)->idx < minidx + chunksize / 2 - 1)
 	{
 		ft_ps_push(from, data);
 		ft_ps_rot(&data->stb, data);
 	}
-	else if ((*from)->idx >= minidx + chunksize / 2 && (*from)->idx <= maxidx)
+	else if ((*from)->idx >= minidx + chunksize / 2 - 1 && (*from)->idx <= maxidx)
 		ft_ps_push(from, data);
 	else
 		ft_ps_error(data, UNDEFERR);
-	return (0);
+	return (1);
 }

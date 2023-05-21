@@ -75,6 +75,7 @@ typedef struct s_vars
 	int				argc;
 	char			**argv;
 	int				errno; // see enum ERRORS
+	int				chunksize;
 }				t_vars;
 
 // push-swap custom functions
@@ -97,6 +98,7 @@ UINT	ft_ps_getmaxidx(t_node *stack, unsigned int len);
 int		ft_ps_pushidx(t_node **stack, unsigned int idx, t_vars *data);
 int		ft_ps_pushidx100(t_node **stack, unsigned int idx, t_vars *data);
 int		ft_ps_pushifrange(t_node **stack, UINT chunksize, t_vars *data);
+int		ft_ps_pushrange(t_node **from, UINT minidx, UINT chunksize, t_vars *data);
 
 // operations.h
 int		ft_swap(t_node **stack);
