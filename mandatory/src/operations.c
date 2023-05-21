@@ -155,8 +155,6 @@ int	ft_ps_pushifrange(t_node **stack, unsigned int chunksize, t_vars *data)
 	if (*stack && (*stack)->idx >= minidx && (*stack)->idx <= maxidx && \
 		(*stack)->idx < data->arrayln - 2)
 	{
-		// write another push which decides if pb rb (smaller half of chunk) OR pb only (bigger half of chunk)
-		//ft_ps_push(stack, data);
 		ft_ps_pushrange (stack, minidx, data->chunksize, data);
 		return (1);
 	}
@@ -171,7 +169,6 @@ int	ft_ps_pushifrange(t_node **stack, unsigned int chunksize, t_vars *data)
 				ft_ps_rot(stack, data);
 				--i;
 			}
-			// write another push which decides if pb rb (smaller half of chunk) OR pb only (bigger half of chunk)
 			ft_ps_pushrange (stack, minidx, data->chunksize, data);
 			return (1);
 		}
@@ -295,18 +292,12 @@ int	ft_push(t_node **from, t_node **to)
 	return (1);
 }
 
-t_node	**ft_ps_pushsel(t_node *from, char *to, t_vars *data)
+t_node	**ft_ps_pushsel(t_node *from, t_vars *data)
 {
 	if (ft_ps_stacksel(from, data) == 'a')
-	{
-		*to = 'b';
 		return (&data->stb);
-	}
 	else if (ft_ps_stacksel(from, data) == 'b')
-	{
-		*to = 'a';
 		return (&data->stb);
-	}
 	else
 		ft_ps_error(data, UNDEFERR);
 	return (NULL);
@@ -317,7 +308,8 @@ int	ft_ps_push(t_node **from, t_vars *data)
 	char	sel;
 	t_node	**to;
 
-	to = ft_ps_pushsel(*from, &sel, data);
+	to = ft_ps_pushsel(*from, data);
+	sel = ft_stacksel(*to, data);
 	if (ft_push(from, to))
 	{
 		if (printf("p%c\n", sel) < 0)
@@ -329,6 +321,20 @@ int	ft_ps_push(t_node **from, t_vars *data)
 
 int	ft_ps_backtoa(t_vars *data)
 {
+	t_node	*b;
+	t_node	*a;
+
+	a = data->sta;
+	b = data->stb;
+	while (b)
+	{
+		if (b->idx == a->idx - 1)
+			//pa
+		
+		
+			
+	}
+	
 	//if it is THE number, push to B
 
 	//else search for THE number
@@ -343,8 +349,12 @@ int	ft_ps_pushrange(t_node **from, UINT minidx, UINT chunksize, t_vars *data)
 {
 	UINT	maxidx;
 	t_node	*b;
+	t_node	**to;
+	char	sel;
 
 	maxidx = minidx + chunksize - 1;
+	sel = ft_ps_stacksel(*from, data);
+
 	b = data->stb;
 	if (maxidx > data->arrayln)
 		chunksize -= (data->arrayln - 3) % chunksize;
@@ -354,7 +364,7 @@ int	ft_ps_pushrange(t_node **from, UINT minidx, UINT chunksize, t_vars *data)
 		ft_ps_push(from, data);
 		return (1);
 	}
-	//else do the usual evaluation (biiger half on top, smaller half on bottom)
+	//else do the usual evaluation (biger half on top, smaller half on bottom)
 	if ((*from)->idx >= minidx && (*from)->idx < minidx + chunksize / 2 - 1)
 	{
 		ft_ps_push(from, data);
