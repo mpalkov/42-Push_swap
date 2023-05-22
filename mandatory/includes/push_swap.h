@@ -21,7 +21,7 @@
 # define UINT unsigned int
 
 //define chunk size for stack less than 100 or less than 500 numbers
-# define SIZEFOR100 5
+# define SIZEFOR100 20
 # define SIZEFOR500 63
 
 // ASCEND 1 - STACK A - descending stacknums starting from top to down
@@ -44,7 +44,7 @@ typedef struct s_node
 	struct s_node	*next;
 	int				nbr;
 	unsigned int	idx;
-	unsigned int	cost;
+	//	unsigned int	cost;
 	//	struct s_node	*prev;
 	// int				listsize;
 	// int				chunkid;
@@ -69,13 +69,15 @@ typedef struct s_vars
 	t_node			*sta;
 	t_node			*stb;
 //	size_t			chnum_a;
-	int				chnum_b;
+//	int				chnum_b;
 //	t_chunk	*chunks_a;
-	t_chunk			*chunks_b;
+//	t_chunk			*chunks_b;
 	int				argc;
 	char			**argv;
 	int				errno; // see enum ERRORS
 	int				chunksize;
+	UINT			chunkmax;
+	UINT			chunkmin;
 }				t_vars;
 
 // push-swap custom functions
@@ -97,7 +99,7 @@ UINT	ft_ps_getminidx(t_node *stack, unsigned int len);
 UINT	ft_ps_getmaxidx(t_node *stack, unsigned int len);
 int		ft_ps_pushidx(t_node **stack, unsigned int idx, t_vars *data);
 int		ft_ps_pushidx100(t_node **stack, unsigned int idx, t_vars *data);
-int		ft_ps_pushifrange(t_node **stack, UINT chunksize, t_vars *data);
+int		ft_ps_findrange(t_node **stack, UINT chunksize, t_vars *data);
 int		ft_ps_pushrange(t_node **from, UINT minidx, UINT chunksize, t_vars *data);
 
 // operations.h

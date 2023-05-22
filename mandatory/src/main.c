@@ -396,16 +396,16 @@ int	ft_ps_sort100(t_vars *data)
 			b = 0;
 	//	maxidx = ft_ps_getmaxidx(data->sta, ft_lstsize((t_list *)data->sta));
 	//	minidx = ft_ps_getminidx(data->sta, ft_lstsize((t_list *)data->sta));
-		ft_ps_pushifrange(&data->sta, SIZEFOR100 - b, data);
+		ft_ps_findrange(&data->sta, SIZEFOR100 - b, data);
 		--a;
 		++b;
 	}
 	ft_ps_handle3(&data->sta, data);
 	
 	//GET BACK NUMBERS IN CORRECT ORDER TO STACK A
-	//while (b--)
-		// find max in B, put it on top of B and push it to A
-		// ft_ps_push(&data->stb, data);
+	b = ft_lstsize((t_list *)data->stb);
+	while (b--)
+		ft_ps_findrange(&data->stb, 1, data);
 	return (0);
 }
 
