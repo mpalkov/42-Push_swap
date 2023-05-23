@@ -148,13 +148,13 @@ int	ft_ps_findrange(t_node **stack, unsigned int chunksize, t_vars *data)
 	sel = ft_ps_stacksel(*stack, data);
 	if (sel == 'a')
 	{
-		minidx = ft_ps_getminidx(*stack, data->arrayln);
-		maxidx = minidx + chunksize - 1;
+		minidx = data->chunkmin;
+		maxidx = minidx + data->chunksize - 1;
 	}
 	else if (sel == 'b')
 	{
 		maxidx = ft_ps_getmaxidx(*stack, data->arrayln);
-		minidx = maxidx - chunksize + 1;
+		minidx = maxidx;
 	}
 	i = 0;
 	j = 0;
@@ -187,13 +187,14 @@ int	ft_ps_findrange(t_node **stack, unsigned int chunksize, t_vars *data)
 		else
 		{
 			j = 0;
-			curb = curt;
-			while (j++ < stacklen - i && curb->next)
+			curb = *stack;
+			while (j++ < stacklen - i /* && curb->next */)
 				curb = curb->next;
 			if (curb && (curb)->idx >= minidx && (curb)->idx <= maxidx && (curb)->idx < data->arrayln - 2)
 			{
-				while (stacklen - j++ > 0)
-					ft_ps_rrot(stack, data);
+				j = i;
+				while (j-- > 0)
+                    ft_ps_rrot(stack, data);
 				ft_ps_pushrange (stack, minidx, data->chunksize, data);
 				return (1);
 			}

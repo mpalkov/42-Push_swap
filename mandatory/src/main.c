@@ -152,13 +152,15 @@ int	ft_ps_data_null(t_vars *data)
 	data->sta = NULL;
 	data->stb = NULL;
 	// data->chunks_a = NULL;
-	data->chunks_b = NULL;
+	// data->chunks_b = NULL;
 	// data->chnum_a = 0;
-	data->chnum_b = 0;
+	// data->chnum_b = 0;
 	data->argc = 0;
 	data->argv = NULL;
 	data->errno = 0;
 	data->chunksize = 0;
+	data->chunkmax = 0;
+	data->chunkmin = 0;
 	return (1);
 }
 
@@ -272,7 +274,7 @@ int	ft_ps_sortedcheck(t_node *start, unsigned int len, int order, t_vars *data)
 	return (1);
 }
 
-t_chunk	*ft_ps_topchunk(t_node *stack, t_vars *data)
+/* t_chunk	*ft_ps_topchunk(t_node *stack, t_vars *data)
 {
 	char	st;
 
@@ -284,6 +286,7 @@ t_chunk	*ft_ps_topchunk(t_node *stack, t_vars *data)
 		return (data->chunks_b);
 	return (NULL);
 }
+*/
 
 int	ft_ps_handle2(t_node **stack, t_vars *data)
 {
@@ -388,12 +391,18 @@ int	ft_ps_sort100(t_vars *data)
 	//int	minidx;
 
 	data->chunksize = SIZEFOR100;
+	data->chunkmin = ft_ps_getminidx(data->sta, data->arrayln);
+//	data->chunkmax = ft_ps_getmaxidx(data->sta, data->arrayln);
 	a = ft_lstsize((t_list *)data->sta);
 	b = 0;
 	while (a > 3)
 	{
 		if (b == SIZEFOR100)
+		{
 			b = 0;
+			data->chunkmin += data->chunksize;
+			data->chunkmax += data->chunksize;
+		}
 	//	maxidx = ft_ps_getmaxidx(data->sta, ft_lstsize((t_list *)data->sta));
 	//	minidx = ft_ps_getminidx(data->sta, ft_lstsize((t_list *)data->sta));
 		ft_ps_findrange(&data->sta, SIZEFOR100 - b, data);
@@ -515,6 +524,6 @@ int	main(int argc, char **argv)
 	// 	printf("\nb: ");
 	// 	ft_lstiter(sta, ft_printf_int);
 	// 	printf("\n\n");
-	printf("FIISHED OK\n");
+	// printf("FIISHED OK\n");
 	return (0);
 }
