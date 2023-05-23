@@ -22,7 +22,7 @@
 
 //define chunk size for stack less than 100 or less than 500 numbers
 # define SIZEFOR100 20
-# define SIZEFOR500 63
+# define SIZEFOR500 40
 
 // ASCEND 1 - STACK A - descending stacknums starting from top to down
 // DESCEND 0 - STACK B - ascending stacknums starting from top to down
