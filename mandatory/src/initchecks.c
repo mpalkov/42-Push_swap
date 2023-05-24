@@ -28,12 +28,11 @@ int	ft_ps_digitchecks(char *str, int *i, int *j, int *sign)
 			++(*j);
 		else
 			return (-1);
-			// ERROR - WRONG ATOI INPUT
 	}
 	return (1);
 }
 
-int	ft_ps_atoi(char *str, int *nbr, t_vars *data)
+int	ft_ps_atoi(char *str, int *nbr, t_var *data)
 {
 	// char *str, int *nbr
 	// str[i + 1], array + i

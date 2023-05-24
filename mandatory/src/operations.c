@@ -12,9 +12,7 @@
 
 #include "push_swap.h"
 
-
 // LIST_FUNCTIONS.c
-
 t_node	*ft_ps_lstfind(t_node *lst, int key)
 {
 	while (lst)
@@ -38,17 +36,25 @@ void	ft_ps_lstiter(t_node *lst, void (*f)(void *))
 	return ;
 }
 
-void	ft_printf_int(void *data)
+int	ft_ps_freestack(t_node **stack)
 {
-	int	*num;
+	t_node	*cur;
+	t_node	*nxt;
 
-	num = (int *)data;
-	printf("%d, ", *num);
-	return ;
+	cur = *stack;
+	nxt = NULL;
+	while (cur)
+	{
+		nxt = cur->next;
+		ft_ptr_freenull(&cur);
+		cur = nxt;
+	}
+	*stack = NULL;
+	return (0);
 }
 
 // OPERATIONS_UTILS
-char	ft_ps_stacksel(t_node *stack, t_vars *data)
+char	ft_ps_stacksel(t_node *stack, t_var *data)
 {
 	if (stack == data->sta)
 		return ('a');
@@ -58,7 +64,7 @@ char	ft_ps_stacksel(t_node *stack, t_vars *data)
 	return(0);
 }
 
-int	ft_ps_ordersel(t_node *stack, t_vars *data)
+int	ft_ps_ordersel(t_node *stack, t_var *data)
 {
 	char	st;
 
@@ -103,7 +109,7 @@ unsigned int	ft_ps_getmaxidx(t_node *stack, unsigned int len)
 	return (max);
 }
 
-int	ft_ps_pushidx(t_node **stack, unsigned int idx, t_vars *data)
+int	ft_ps_pushidx(t_node **stack, unsigned int idx, t_var *data)
 {
 	while (*stack)
 	{
@@ -134,7 +140,7 @@ int	ft_ps_pushidx(t_node **stack, unsigned int idx, t_vars *data)
 
 // MAXIDX - max index of the actual chunk.
 // THE MINIDX for actual chunk will be always the lowest of the whole stack A
-int	ft_ps_findrange(t_node **stack, unsigned int chunksize, t_vars *data)
+int	ft_ps_findrange(t_node **stack, unsigned int chunksize, t_var *data)
 {
 	unsigned int	i;
 	unsigned int	j;
@@ -218,14 +224,14 @@ int	ft_swap(t_node **stack)
 	return (1);
 }
 
-int	ft_ps_swap(t_node **stack, t_vars *data)
+int	ft_ps_swap(t_node **stack, t_var *data)
 {
 	char	sel;
 	
 	sel = ft_ps_stacksel(*stack, data);
 	if (ft_swap(stack))
 		{
-			if (printf("s%c\n", sel) < 0)
+			if (ft_printf("s%c\n", sel) < 0)
 				ft_ps_error(data, WRITEERR);
 			return(1);
 		}
@@ -249,14 +255,14 @@ int	ft_rotate(t_node **stack)
 	return (1);
 }
 
-int	ft_ps_rot(t_node **stack, t_vars *data)
+int	ft_ps_rot(t_node **stack, t_var *data)
 {
 	char	sel;
 	
 	sel = ft_ps_stacksel(*stack, data);
 	if (ft_rotate(stack))
 		{
-			if (printf("r%c\n", sel) < 0)
+			if (ft_printf("r%c\n", sel) < 0)
 				ft_ps_error(data, WRITEERR);
 			return(1);
 		}
@@ -276,14 +282,14 @@ int	ft_revrotate(t_node **stack)
 	return (1);
 }
 
-int	ft_ps_rrot(t_node **stack, t_vars *data)
+int	ft_ps_rrot(t_node **stack, t_var *data)
 {
 	char	sel;
 	
 	sel = ft_ps_stacksel(*stack, data);
 	if (ft_revrotate(stack))
 		{
-			if (printf("rr%c\n", sel) < 0)
+			if (ft_printf("rr%c\n", sel) < 0)
 				ft_ps_error(data, WRITEERR);
 			return(1);
 		}
@@ -304,7 +310,7 @@ int	ft_push(t_node **from, t_node **to)
 	return (1);
 }
 
-t_node	**ft_ps_pushsel(t_node *from, t_vars *data)
+t_node	**ft_ps_pushsel(t_node *from, t_var *data)
 {
 	if (ft_ps_stacksel(from, data) == 'a')
 		return (&data->stb);
@@ -315,7 +321,7 @@ t_node	**ft_ps_pushsel(t_node *from, t_vars *data)
 	return (NULL);
 }
 
-int	ft_ps_push(t_node **from, t_vars *data)
+int	ft_ps_push(t_node **from, t_var *data)
 {
 	char	sel;
 	t_node	**to;
@@ -324,43 +330,15 @@ int	ft_ps_push(t_node **from, t_vars *data)
 	sel = ft_ps_stacksel(*to, data);
 	if (ft_push(from, to))
 	{
-		if (printf("p%c\n", sel) < 0)
+		if (ft_printf("p%c\n", sel) < 0)
 			ft_ps_error(data, WRITEERR);
 		return (1);
 	}
 	return (0);
 }
 
-/*
-int	ft_ps_backtoa(t_vars *data)
-{
-	t_node	*b;
-	t_node	*a;
-
-	a = data->sta;
-	b = data->stb;
-	while (b)
-	{
-		ft_ps_findrange(&data->sta, 1, data);
-		if (b->idx == a->idx - 1)
-			//pa
-		
-		
-			
-	}
-	
-	//if it is THE number, push to B
-
-	//else search for THE number
-	// max. SIZEFOR100 from top and SIZEFOR100 from bottom (cant be more numbers)
-	// not SIZEFOR100 / 2, because if they are in order, they will be together.
-	// push to A.
-	return (1);
-}
-*/
-
 //chunksize is actual chunk size, not theoretical chunk size. Gets smaller by every push.
-int	ft_ps_pushrange(t_node **from, UINT minidx, UINT chunksize, t_vars *data)
+int	ft_ps_pushrange(t_node **from, UINT minidx, UINT chsize, t_var *data)
 {
 	UINT	maxidx;
 	t_node	**to;
@@ -382,15 +360,15 @@ int	ft_ps_pushrange(t_node **from, UINT minidx, UINT chunksize, t_vars *data)
 		return (1);
 	}
 	//else do the usual evaluation (biger half on top, smaller half on bottom)
-	maxidx = minidx + chunksize - 1;
+	maxidx = minidx + chsize - 1;
 	if (maxidx > data->arrayln)
-		chunksize -= (data->arrayln - 3) % chunksize;
-	if ((*from)->idx >= minidx && (*from)->idx < minidx + chunksize / 2 - 1)
+		chsize -= (data->arrayln - 3) % chsize;
+	if ((*from)->idx >= minidx && (*from)->idx < minidx + chsize / 2 - 1)
 	{
 		ft_ps_push(from, data);
 		ft_ps_rot(to, data);
 	}
-	else if ((*from)->idx >= minidx + chunksize / 2 - 1 && (*from)->idx <= maxidx)
+	else if ((*from)->idx >= minidx + chsize / 2 - 1 && (*from)->idx <= maxidx)
 		ft_ps_push(from, data);
 	else
 		ft_ps_error(data, UNDEFERR);

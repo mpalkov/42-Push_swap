@@ -77,7 +77,6 @@ DEPS		:=	$(addsuffix .d,$(basename $(OBJS)))
 INCLUDE		:=	-I./utils/libft/ -I./utils/libft/includes/ -I./includes/
 
 all: make_libft $(NAME)
-	@echo "all executed"
 
 # bonus: make_libft $(NAME_C_BNS) $(NAME_S_BNS)
 
@@ -85,13 +84,8 @@ make_libft:
 	@echo "$(GREEN)	Calling Libft make $(DEFCOLOR)"
 	@$(MAKE) -C $(LIBFT_DIR)
 
-objects:
-	@echo "$(OBJS)"
-
-$(OBJ_DIR):
-	@mkdir -p $@
-
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(OBJ_DIR)
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $<
 	@echo "$(GREEN)	Compiling: $< -> $@ $(DEFCOLOR)"
 

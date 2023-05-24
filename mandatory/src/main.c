@@ -19,27 +19,19 @@ int	ft_ps_printerr(int err)
 	return (0);
 }
 
-int	ft_ps_error(t_vars *data, int err)
+// no write protection after printerr(),
+//     becaue after this the program terminates.
+int	ft_ps_error(t_var *data, int err)
 {
 	data->errno = err;
+	ft_ps_freestack(&(data->sta));
 	ft_ptr_freenull(&(data->sortedarray));
-	//ft_freestack(sta);
-		// - inside it will crawl and freenull each node
-		// and then it will ptrfreenull data->sta;
-	// NOT ft_ptr_freenull(&(data->sta));
-	//ft_freestack(stb);
-		// - inside it will crawl and freenull each node
-		// and then it will ptrfreenull data->sta;
-	// NOT ft_ptr_freenull(&(data->stb));
 	ft_ps_printerr(err);
-	// no write protection here, becaue after this the program terminates.
 	if (err == OK || err == NO_ACTIONS)
 		exit(EXIT_SUCCESS);
 	else
 		exit(EXIT_FAILURE);
 }
-
-// ft_ps_getmin
 
 t_node	*ft_lst_getlast(t_node *stack)
 {
@@ -59,7 +51,7 @@ t_node	*ft_lst_getprelast(t_node *stack)
 	return (stack);
 }
 
-int	ft_addlast(t_node **stack, int n, t_vars *data)
+int	ft_addlast(t_node **stack, int n, t_var *data)
 {
 	t_node	*last;
 	t_node	*new;
@@ -81,7 +73,7 @@ int	ft_addlast(t_node **stack, int n, t_vars *data)
 	return (1);
 }
 
-t_node	*ft_init_stack(t_vars *data)
+t_node	*ft_init_stack(t_var *data)
 {
 	t_node	*stack;
 	unsigned int	i;
@@ -93,15 +85,9 @@ t_node	*ft_init_stack(t_vars *data)
 	return (stack);
 }
 
-// sta == stack_a
-// stb == stack_b
-
-int	ft_fillarr(int *array, unsigned int len, char **str, t_vars *data)
+int	ft_fillarr(int *array, unsigned int len, char **str, t_var *data)
 {
-	// int *array, unsigned int len, char **str
-	// data->sortedarray, data->arrayln, argv
 	unsigned int	i;
-
 	i = 0;
 	while (i < len)
 	{
@@ -145,16 +131,12 @@ int	ft_selection_sort(int *array, unsigned int len)
 	return (0);
 }
 
-int	ft_ps_data_null(t_vars *data)
+int	ft_ps_data_null(t_var *data)
 {
 	data->sortedarray = NULL;
 	data->arrayln = 0;
 	data->sta = NULL;
 	data->stb = NULL;
-	// data->chunks_a = NULL;
-	// data->chunks_b = NULL;
-	// data->chnum_a = 0;
-	// data->chnum_b = 0;
 	data->argc = 0;
 	data->argv = NULL;
 	data->errno = 0;
@@ -164,7 +146,7 @@ int	ft_ps_data_null(t_vars *data)
 	return (1);
 }
 
-int	ft_ps_initdata(int argc, char **argv, t_vars *data)
+int	ft_ps_initdata(int argc, char **argv, t_var *data)
 {
 	if (argc < 2)
 		ft_ps_error(data, INPUTERR);
@@ -174,12 +156,11 @@ int	ft_ps_initdata(int argc, char **argv, t_vars *data)
 	data->sortedarray = malloc(sizeof(data->sortedarray) * data->arrayln);
 	if (!data->sortedarray)
 		ft_ps_error(data, MALLOCERR);
-		// MEM-ERROR - free and TERMINATE
 	return (1);
 }
 
-// CHECK IF NUMREPEATS WITHIN ISSORTED CHECK
-int	ft_ps_numrepeats(int *array, unsigned int len, t_vars *data)
+// CHECK IF NUM REPEATS WITHIN ISSORTED CHECK
+int	ft_ps_numrepeats(int *array, unsigned int len, t_var *data)
 {
 	unsigned int	i;
 	unsigned int	j;
@@ -200,7 +181,7 @@ int	ft_ps_numrepeats(int *array, unsigned int len, t_vars *data)
 	return (0);
 }
 
-int	ft_ps_issorted(int *array, unsigned int len, t_vars *data)
+int	ft_ps_issorted(int *array, unsigned int len, t_var *data)
 {
 	unsigned int	i;
 
@@ -216,7 +197,7 @@ int	ft_ps_issorted(int *array, unsigned int len, t_vars *data)
 	return (1);
 }
 
-int	ft_ps_indexnodes(t_vars *data)
+int	ft_ps_indexnodes(t_var *data)
 {
 	unsigned int	i;
 	int		*arr;
@@ -249,7 +230,7 @@ int	ft_ps_inorder(t_node *cur, int order)
 //ORDER 0 == DESCENDING	(WHEN SORTED IN STACK B)
 //len - length to check-sort from start
 //(start == 1, to compare start + 1 len == 2)
-int	ft_ps_sortedcheck(t_node *start, unsigned int len, int order, t_vars *data)
+int	ft_ps_sortedcheck(t_node *start, unsigned int len, int order, t_var *data)
 {
 	unsigned int	i;
 	t_node	*cur;
@@ -274,21 +255,7 @@ int	ft_ps_sortedcheck(t_node *start, unsigned int len, int order, t_vars *data)
 	return (1);
 }
 
-/* t_chunk	*ft_ps_topchunk(t_node *stack, t_vars *data)
-{
-	char	st;
-
-	st = ft_ps_stacksel(stack, data);
-	//no chunks_a exist anymore
-	//if (stack == 'a' && data->chunks_a)
-	//	return (data->chunks_a);
-	if (st == 'b' && data->chunks_b)
-		return (data->chunks_b);
-	return (NULL);
-}
-*/
-
-int	ft_ps_handle2(t_node **stack, t_vars *data)
+int	ft_ps_handle2(t_node **stack, t_var *data)
 {
 	int	issorted;
 	int	order;
@@ -306,7 +273,7 @@ int	ft_ps_handle2(t_node **stack, t_vars *data)
 	return (0);
 }
 
-int	ft_ps_sort3(t_node **stack, int order, t_vars *data)
+int	ft_ps_sort3(t_node **stack, int order, t_var *data)
 {
 	unsigned int	key;
 
@@ -322,7 +289,7 @@ int	ft_ps_sort3(t_node **stack, int order, t_vars *data)
 	return(0);
 }
 
-int	ft_ps_handle3(t_node **stack, t_vars *data)
+int	ft_ps_handle3(t_node **stack, t_var *data)
 {
 	int	issorted;
 	int	order;
@@ -340,18 +307,16 @@ int	ft_ps_handle3(t_node **stack, t_vars *data)
 	return (0);
 }
 
-int	ft_ps_sort5(t_vars *data)
+int	ft_ps_sort5(t_var *data)
 {
 	int	a;
 	int	b;
-	// int	maxidx;
 	int	minidx;
 
 	a = 5;
 	b = 0;
 	while (a > 3)
 	{
-		// maxidx = ft_ps_getmaxidx(data->sta, ft_lstsize((t_list *)data->sta));
 		minidx = ft_ps_getminidx(data->sta, ft_lstsize((t_list *)data->sta));
 		ft_ps_pushidx(&data->sta, minidx, data);
 		--a;
@@ -365,7 +330,7 @@ int	ft_ps_sort5(t_vars *data)
 	return (0);
 }
 
-int	ft_ps_handle5(t_node **stack, t_vars *data)
+int	ft_ps_handle5(t_node **stack, t_var *data)
 {
 	int	issorted;
 	int	order;
@@ -383,17 +348,16 @@ int	ft_ps_handle5(t_node **stack, t_vars *data)
 	return (0);
 }
 
-int	ft_ps_sort_many(t_vars *data)
+int	ft_ps_sort_many(t_var *data)
 {
 	int	a;
 	int	b;
-	
+
 	if (data->arrayln <= 250)
 		data->chunksize = SIZEFOR100;
 	else
 		data->chunksize = SIZEFOR500;
 	data->chunkmin = ft_ps_getminidx(data->sta, data->arrayln);
-//	data->chunkmax = ft_ps_getmaxidx(data->sta, data->arrayln);
 	a = ft_lstsize((t_list *)data->sta);
 	b = 0;
 	while (a > 3)
@@ -404,22 +368,18 @@ int	ft_ps_sort_many(t_vars *data)
 			data->chunkmin += data->chunksize;
 			data->chunkmax += data->chunksize;
 		}
-	//	maxidx = ft_ps_getmaxidx(data->sta, ft_lstsize((t_list *)data->sta));
-	//	minidx = ft_ps_getminidx(data->sta, ft_lstsize((t_list *)data->sta));
 		ft_ps_findrange(&data->sta, data->chunksize - b, data);
 		--a;
 		++b;
 	}
 	ft_ps_handle3(&data->sta, data);
-	
-	//GET BACK NUMBERS IN CORRECT ORDER TO STACK A
 	b = ft_lstsize((t_list *)data->stb);
 	while (b--)
 		ft_ps_findrange(&data->stb, 1, data);
 	return (0);
 }
 
-int	ft_ps_handle_many(t_node **stack, t_vars *data)
+int	ft_ps_handle_many(t_node **stack, t_var *data)
 {
 	int	issorted;
 	int	order;
@@ -437,7 +397,7 @@ int	ft_ps_handle_many(t_node **stack, t_vars *data)
 	return (0);
 }
 
-int ft_ps_sorting(t_vars *data)
+int	ft_ps_sorting(t_var *data)
 {
 	unsigned int	len;
 
@@ -447,85 +407,34 @@ int ft_ps_sorting(t_vars *data)
 	else if (len == 3)
 		ft_ps_handle3(&data->sta, data);
 	else if (len <= 5)
-	 	ft_ps_handle5(&data->sta, data);
+		ft_ps_handle5(&data->sta, data);
 	else
-	 	ft_ps_handle_many(&data->sta, data);
+		ft_ps_handle_many(&data->sta, data);
 	return (0);
 }
 
-int ft_ps_initialize(int argc, char **argv, t_vars *data)
+int	ft_ps_initialize(int argc, char **argv, t_var *data)
 {
 	ft_ps_data_null(data);
 	ft_ps_initdata(argc, argv, data);
 	ft_fillarr(data->sortedarray, data->arrayln, argv, data);
-
-		// # INITCHECKS START
-	// if only 1 number and it's valid int,
-	// consider stack as ordered and do nothing.
 	if (argc == 2)
 		ft_ps_error(data, NO_ACTIONS);
-
-	// IF HAS DUPLICATE NUMBERS, EXIT AND ERROR
 	ft_ps_numrepeats(data->sortedarray, data->arrayln, data);
-	
-	// IF STACK IS SORTED ON INPUT, EXIT WITHOUT PRINTING.
 	ft_ps_issorted(data->sortedarray, data->arrayln, data);
-		// # INITCHECKS END
-
-	// CREATE THE STACK A
 	data->sta = ft_init_stack(data);
-	
 	ft_selection_sort(data->sortedarray, data->arrayln);
-
-	// ADD INDEX INFORMATION TO EACH LIST NODE
 	ft_ps_indexnodes(data);
 	return (1);
 }
 
 int	main(int argc, char **argv)
 {
-	// int		argc = 6;
-	// char	*argv[] = {"push.c", "1", "2", "3", "4", "5"};
-	// char	*argvb[] = {"push.c", "11", "12"};
+	t_var	data;
 
-	t_vars	data;
 	if (argc == 1)
 		return (0);
-
-	// put all init and sortarray into one line with its variables etc.
-	if (ft_ps_initialize(argc, argv, &data) == -1)
-		return (-1);
-
+	ft_ps_initialize(argc, argv, &data);
 	ft_ps_sorting(&data);
-	// ERROR
-
-	// 	sta = ft_init_stack(argc, argv);
-	// 	if (!sta)
-	// 		return (-1);
-	// 		// ERROR CREATING STACK A
-	// // CONTINUAR AQUI
-
-	// // TESTING
-	// 	stb = ft_init_stack(3, argvb);
-	// 	t_node	*test1 = ft_init_stack(2, (char *[]){"coco", "99"});
-	// 	t_node	*test0 = NULL;
-	// 	ft_push(&test0, &test1);
-	// 	//wrong 1 or 0 elements stacks.
-	// 	printf("a: ");
-	// 	ft_lstiter(test1, ft_printf_int);
-	// 	printf("\nb: ");
-	// 	ft_lstiter(sta, ft_printf_int);
-	// 	printf("\n");
-	// 	printf("pb\n");
-	// 	ft_push(&test1, &sta);
-	// 	printf("a: %p", test1);
-	// 	ft_lstiter(test1, ft_printf_int);
-	// 	printf("\nb: ");
-	// 	ft_lstiter(sta, ft_printf_int);
-	// 	printf("\n\n");
-	if (ft_ps_sortedcheck(data.sta, 0, ASCEND, &data))
-		printf("FIISHED OK\n");
-	else
-		printf("NOT SORTED CORRECTLY.\n");
 	return (0);
 }
