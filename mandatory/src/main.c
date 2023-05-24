@@ -523,6 +523,9 @@ int	main(int argc, char **argv)
 	// 	printf("\nb: ");
 	// 	ft_lstiter(sta, ft_printf_int);
 	// 	printf("\n\n");
-	printf("FIISHED OK\n");
+	if (ft_ps_sortedcheck(data.sta, 0, ASCEND, &data))
+		printf("FIISHED OK\n");
+	else
+		printf("NOT SORTED CORRECTLY.\n");
 	return (0);
 }
