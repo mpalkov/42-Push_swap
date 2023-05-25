@@ -106,4 +106,18 @@ int		ft_ps_push(t_node **from, t_var *data);
 char	ft_ps_stacksel(t_node *stack, t_var *data);
 int		ft_ps_ordersel(t_node *stack, t_var *data);
 
+int		ft_ps_handle2(t_node **stack, t_var *data);
+int		ft_ps_handle3(t_node **stack, t_var *data);
+int		ft_ps_handle5(t_node **stack, t_var *data);
+
+int	ft_ps_sortedcheck(t_node *start, unsigned int len, int order, t_var *data);
+int	ft_ps_initialize(int argc, char **argv, t_var *data);
+int	ft_ps_indexnodes(t_var *data);
+
+//arraysort
+int	ft_selection_sort(int *array, unsigned int len);
+int	ft_ps_numrepeats(int *array, unsigned int len, t_var *data);
+int	ft_fillarr(int *array, unsigned int len, char **str, t_var *data);
+t_node	**ft_ps_pushsel(t_node *from, t_var *data);
+
 #endif

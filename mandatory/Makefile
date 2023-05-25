@@ -22,8 +22,19 @@ NAME	:=	push_swap
 #		FILES
 
 SRCS	:=	main.c \
-			initchecks.c \
-			operations.c
+			operations.c \
+			ft_array_fns.c \
+			ft_exit.c \
+			ft_init_fns.c \
+			ft_ops_push.c \
+			ft_ops_swap.c \
+			ft_sort2_3_5.c \
+			ft_checks.c \
+			ft_gets.c \
+			ft_lst_fns.c \
+			ft_ops_r_rr.c \
+			ft_sel_fns.c \
+			
 
 #-------------------------------------------------------------------------------
 #		COLORS
