@@ -112,7 +112,22 @@ int	ft_ps_findrange(t_node **stack, unsigned int chunksize, t_var *data)
 	return (0);
 }
 
-//chunksize is actual chunk size, not theoretical chunk size. Gets smaller by every push.
+// void	ft_ps_pr_init(char *sel, UINT *n, t_node *from, t_node ***t, t_var *dat)
+// {
+// 	*sel = ft_ps_stacksel(from, dat);
+// 	*n = from->idx - 1;
+// 	if (*sel == 'b')
+// 	{
+// 		*t = &dat->sta;
+// 		*n = from->idx + 1;
+// 	}
+// }
+
+
+
+// if the idx to push is the next bigger than topB, dont rotate,
+//		just push on top of B and it will be already sorted there.
+//else do the usual evaluation (biger half on top, smaller half on bottom)
 int	ft_ps_pushrange(t_node **from, UINT minidx, UINT chsize, t_var *data)
 {
 	UINT	maxidx;
@@ -120,7 +135,8 @@ int	ft_ps_pushrange(t_node **from, UINT minidx, UINT chsize, t_var *data)
 	char	sel;
 	UINT	thenbr;
 
-	sel = ft_ps_stacksel(*from, data);
+	// ft_ps_pr_init(&sel, &thenbr, *from, &to, data);
+		sel = ft_ps_stacksel(*from, data);
 	to = &data->stb;
 	thenbr = (*from)->idx - 1;
 	if (sel == 'b')
@@ -128,13 +144,12 @@ int	ft_ps_pushrange(t_node **from, UINT minidx, UINT chsize, t_var *data)
 		to = &data->sta;
 		thenbr = (*from)->idx + 1;
 	}
-	//if the idx to push is the next bigger than topB, dont rotate, just push on top of B and it will be already sorted there.
+
 	if (*to && (*to)->idx == thenbr)
 	{
 		ft_ps_push(from, data);
 		return (1);
 	}
-	//else do the usual evaluation (biger half on top, smaller half on bottom)
 	maxidx = minidx + chsize - 1;
 	if (maxidx > data->arrayln)
 		chsize -= (data->arrayln - 3) % chsize;

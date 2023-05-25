@@ -52,13 +52,13 @@ typedef struct s_node
 {
 	struct s_node	*next;
 	int				nbr;
-	unsigned int	idx;
+	UINT	idx;
 }				t_node;
 
 typedef struct s_var
 {
 	int				*sortedarray;
-	unsigned int	arrayln;
+	UINT	arrayln;
 	t_node			*sta;
 	t_node			*stb;
 	int				argc;
@@ -85,10 +85,10 @@ int		ft_ps_freestack(t_node **stack);
 t_node	*ft_lst_getlast(t_node *stack);
 t_node	*ft_lst_getprelast(t_node *stack);
 t_node	*ft_ps_lstfind(t_node *lst, int key);
-UINT	ft_ps_getminidx(t_node *stack, unsigned int len);
-UINT	ft_ps_getmaxidx(t_node *stack, unsigned int len);
-int		ft_ps_pushidx(t_node **stack, unsigned int idx, t_var *data);
-int		ft_ps_pushidx100(t_node **stack, unsigned int idx, t_var *data);
+UINT	ft_ps_getminidx(t_node *stack, UINT len);
+UINT	ft_ps_getmaxidx(t_node *stack, UINT len);
+int		ft_ps_pushidx(t_node **stack, UINT idx, t_var *data);
+int		ft_ps_pushidx100(t_node **stack, UINT idx, t_var *data);
 int		ft_ps_findrange(t_node **stack, UINT chunksize, t_var *data);
 int		ft_ps_pushrange(t_node **from, UINT minidx, UINT chsize, t_var *data);
 
@@ -109,15 +109,16 @@ int		ft_ps_ordersel(t_node *stack, t_var *data);
 int		ft_ps_handle2(t_node **stack, t_var *data);
 int		ft_ps_handle3(t_node **stack, t_var *data);
 int		ft_ps_handle5(t_node **stack, t_var *data);
+int		ft_ps_handle_many(t_node **stack, t_var *data);
 
-int	ft_ps_sortedcheck(t_node *start, unsigned int len, int order, t_var *data);
+int	ft_ps_sortedcheck(t_node *start, UINT len, int order, t_var *data);
 int	ft_ps_initialize(int argc, char **argv, t_var *data);
 int	ft_ps_indexnodes(t_var *data);
 
 //arraysort
-int	ft_selection_sort(int *array, unsigned int len);
-int	ft_ps_numrepeats(int *array, unsigned int len, t_var *data);
-int	ft_fillarr(int *array, unsigned int len, char **str, t_var *data);
+int	ft_selection_sort(int *array, UINT len);
+int	ft_ps_numrepeats(int *array, UINT len, t_var *data);
+int	ft_fillarr(int *array, UINT len, char **str, t_var *data);
 t_node	**ft_ps_pushsel(t_node *from, t_var *data);
 
 #endif
