@@ -17,6 +17,7 @@
 # include <limits.h>	// INT_MAX
 # include "libft.h"
 # include "ft_printf.h"
+
 # define UINT unsigned int
 
 //define chunk size for stack less than 100 or less than 500 numbers
@@ -77,7 +78,7 @@ int		ft_ps_digitchecks(char *str, int *i, int *j, int *sign);
 int		ft_ps_atoi(char *str, int *nbr, t_var *data);
 
 int		ft_ps_printerr(int err);
-int		ft_ps_error(t_var *data, int err);
+int		ft_ps_exit(t_var *data, int err);
 int		ft_ps_freestack(t_node **stack);
 
 // list_tools.h - can be added to the libft maybe?

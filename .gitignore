@@ -1,0 +1,4 @@
+*.d
+*.o
+libft.a
+push_swap:

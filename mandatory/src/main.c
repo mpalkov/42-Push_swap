@@ -21,7 +21,7 @@ int	ft_ps_printerr(int err)
 
 // no write protection after printerr(),
 //     becaue after this the program terminates.
-int	ft_ps_error(t_var *data, int err)
+int	ft_ps_exit(t_var *data, int err)
 {
 	data->errno = err;
 	ft_ps_freestack(&(data->sta));
@@ -59,7 +59,7 @@ int	ft_addlast(t_node **stack, int n, t_var *data)
 	new = NULL;
 	new = malloc(sizeof(*new));
 	if (!new)
-		ft_ps_error(data, MALLOCERR);
+		ft_ps_exit(data, MALLOCERR);
 	new->nbr = n;
 	new->next = NULL;
 	new->idx = 0;
@@ -149,13 +149,13 @@ int	ft_ps_data_null(t_var *data)
 int	ft_ps_initdata(int argc, char **argv, t_var *data)
 {
 	if (argc < 2)
-		ft_ps_error(data, INPUTERR);
+		ft_ps_exit(data, INPUTERR);
 	data->arrayln = argc - 1;
 	data->argc = argc;
 	data->argv = argv;
 	data->sortedarray = malloc(sizeof(data->sortedarray) * data->arrayln);
 	if (!data->sortedarray)
-		ft_ps_error(data, MALLOCERR);
+		ft_ps_exit(data, MALLOCERR);
 	return (1);
 }
 
@@ -173,7 +173,7 @@ int	ft_ps_numrepeats(int *array, unsigned int len, t_var *data)
 		while (j <= len)
 		{
 			if (array[i] == array[j++])
-				ft_ps_error(data, INPUTERR);
+				ft_ps_exit(data, INPUTERR);
 		}
 		++i;
 		j = i + 1;		
@@ -193,7 +193,7 @@ int	ft_ps_issorted(int *array, unsigned int len, t_var *data)
 		else
 			return (0);
 	}
-	ft_ps_error(data, NO_ACTIONS);
+	ft_ps_exit(data, NO_ACTIONS);
 	return (1);
 }
 
@@ -419,7 +419,7 @@ int	ft_ps_initialize(int argc, char **argv, t_var *data)
 	ft_ps_initdata(argc, argv, data);
 	ft_fillarr(data->sortedarray, data->arrayln, argv, data);
 	if (argc == 2)
-		ft_ps_error(data, NO_ACTIONS);
+		ft_ps_exit(data, NO_ACTIONS);
 	ft_ps_numrepeats(data->sortedarray, data->arrayln, data);
 	ft_ps_issorted(data->sortedarray, data->arrayln, data);
 	data->sta = ft_init_stack(data);
@@ -436,5 +436,8 @@ int	main(int argc, char **argv)
 		return (0);
 	ft_ps_initialize(argc, argv, &data);
 	ft_ps_sorting(&data);
+
+	//free everything
+	ft_ps_exit(&data, OK);
 	return (0);
 }

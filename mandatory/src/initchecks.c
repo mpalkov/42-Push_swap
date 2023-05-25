@@ -46,16 +46,16 @@ int	ft_ps_atoi(char *str, int *nbr, t_var *data)
 	sign = 1;
 	c = 0;
 	if (!str || !nbr)
-		ft_ps_error(data, INPUTERR);
+		ft_ps_exit(data, INPUTERR);
 		// ERROR - WRONG ATOI INPUT
 	if (ft_ps_digitchecks(str, &i, &j, &sign) == -1)
-		ft_ps_error(data, INPUTERR);
+		ft_ps_exit(data, INPUTERR);
 	while (--j >= 0)
 		c = c * 10 + (str[i++] - '0');
 	c = c * sign;
 	*nbr = (int)c;
 	if (c != *nbr)
-		ft_ps_error(data, INPUTERR);
+		ft_ps_exit(data, INPUTERR);
 		// ERROR - INPUT EXCEEDS INT LIMITS
 	return (1);
 }

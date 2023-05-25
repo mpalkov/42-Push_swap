@@ -60,7 +60,7 @@ char	ft_ps_stacksel(t_node *stack, t_var *data)
 		return ('a');
 	if (stack == data->stb)
 		return ('b');
-	ft_ps_error(data, UNDEFERR);
+	ft_ps_exit(data, UNDEFERR);
 	return(0);
 }
 
@@ -73,7 +73,7 @@ int	ft_ps_ordersel(t_node *stack, t_var *data)
 		return (ASCEND);
 	if (st == 'b')
 		return (DESCEND);
-	ft_ps_error(data, UNDEFERR);
+	ft_ps_exit(data, UNDEFERR);
 	return(0);
 }
 
@@ -133,7 +133,7 @@ int	ft_ps_pushidx(t_node **stack, unsigned int idx, t_var *data)
 		else if ((*stack)->next)
 			ft_ps_rot(stack, data);
 		else if (!(*stack)->next)
-			ft_ps_error(data, UNDEFERR);
+			ft_ps_exit(data, UNDEFERR);
 	}
 	return (0);
 }
@@ -232,7 +232,7 @@ int	ft_ps_swap(t_node **stack, t_var *data)
 	if (ft_swap(stack))
 		{
 			if (ft_printf("s%c\n", sel) < 0)
-				ft_ps_error(data, WRITEERR);
+				ft_ps_exit(data, WRITEERR);
 			return(1);
 		}
 	return(0);
@@ -263,7 +263,7 @@ int	ft_ps_rot(t_node **stack, t_var *data)
 	if (ft_rotate(stack))
 		{
 			if (ft_printf("r%c\n", sel) < 0)
-				ft_ps_error(data, WRITEERR);
+				ft_ps_exit(data, WRITEERR);
 			return(1);
 		}
 	return(0);
@@ -290,7 +290,7 @@ int	ft_ps_rrot(t_node **stack, t_var *data)
 	if (ft_revrotate(stack))
 		{
 			if (ft_printf("rr%c\n", sel) < 0)
-				ft_ps_error(data, WRITEERR);
+				ft_ps_exit(data, WRITEERR);
 			return(1);
 		}
 	return(0);
@@ -317,7 +317,7 @@ t_node	**ft_ps_pushsel(t_node *from, t_var *data)
 	else if (ft_ps_stacksel(from, data) == 'b')
 		return (&data->sta);
 	else
-		ft_ps_error(data, UNDEFERR);
+		ft_ps_exit(data, UNDEFERR);
 	return (NULL);
 }
 
@@ -331,7 +331,7 @@ int	ft_ps_push(t_node **from, t_var *data)
 	if (ft_push(from, to))
 	{
 		if (ft_printf("p%c\n", sel) < 0)
-			ft_ps_error(data, WRITEERR);
+			ft_ps_exit(data, WRITEERR);
 		return (1);
 	}
 	return (0);
@@ -371,6 +371,6 @@ int	ft_ps_pushrange(t_node **from, UINT minidx, UINT chsize, t_var *data)
 	else if ((*from)->idx >= minidx + chsize / 2 - 1 && (*from)->idx <= maxidx)
 		ft_ps_push(from, data);
 	else
-		ft_ps_error(data, UNDEFERR);
+		ft_ps_exit(data, UNDEFERR);
 	return (1);
 }
