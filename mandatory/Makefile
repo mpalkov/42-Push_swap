@@ -22,7 +22,7 @@ NAME	:=	push_swap
 #		FILES
 
 SRCS	:=	main.c \
-			operations.c \
+			ft_pushrange.c \
 			ft_array_fns.c \
 			ft_exit.c \
 			ft_init_fns.c \
@@ -34,7 +34,8 @@ SRCS	:=	main.c \
 			ft_lst_fns.c \
 			ft_ops_r_rr.c \
 			ft_sel_fns.c \
-			ft_sort_many.c
+			ft_sort_many.c \
+			ft_findrange.c
 			
 
 #-------------------------------------------------------------------------------
