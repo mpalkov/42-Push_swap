@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_array_fns.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mpalkov <mpalkov@student.42barcelo>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/29 14:43:18 by mpalkov           #+#    #+#             */
+/*   Updated: 2023/05/29 14:45:22 by mpalkov          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-int	ft_fillarr(int *array, unsigned int len, char **str, t_var *data)
+int	ft_fillarr(int *array, UINT len, char **str, t_var *data)
 {
-	unsigned int	i;
+	UINT	i;
+
 	i = 0;
 	while (i < len)
 	{
@@ -14,7 +27,7 @@ int	ft_fillarr(int *array, unsigned int len, char **str, t_var *data)
 
 int	ft_swap_ints(int *a, int *b)
 {
-	int tmp[1];
+	int	tmp[1];
 
 	tmp[0] = *a;
 	*a = *b;
@@ -22,11 +35,11 @@ int	ft_swap_ints(int *a, int *b)
 	return (1);
 }
 
-int	ft_selection_sort(int *array, unsigned int len)
+int	ft_selection_sort(int *array, UINT len)
 {
-	unsigned int	i;
-	unsigned int	j;
-	unsigned int	idx;
+	UINT	i;
+	UINT	j;
+	UINT	idx;
 
 	i = 0;
 	while (i < len)

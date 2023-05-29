@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_gets.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mpalkov <mpalkov@student.42barcelo>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/29 14:45:42 by mpalkov           #+#    #+#             */
+/*   Updated: 2023/05/29 14:45:45 by mpalkov          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 t_node	*ft_lst_getlast(t_node *stack)
@@ -21,7 +33,7 @@ t_node	*ft_lst_getprelast(t_node *stack)
 unsigned int	ft_ps_getminidx(t_node *stack, unsigned int len)
 {
 	unsigned int	min;
-	
+
 	min = UINT_MAX;
 	while (len > 0 && stack)
 	{
@@ -37,7 +49,7 @@ unsigned int	ft_ps_getminidx(t_node *stack, unsigned int len)
 unsigned int	ft_ps_getmaxidx(t_node *stack, unsigned int len)
 {
 	unsigned int	max;
-	
+
 	max = 0;
 	while (len > 0)
 	{

@@ -1,16 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ops_push.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mpalkov <mpalkov@student.42barcelo>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/29 14:45:54 by mpalkov           #+#    #+#             */
+/*   Updated: 2023/05/29 14:45:57 by mpalkov          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 int	ft_push(t_node **from, t_node **to)
 {
 	t_node	*tmp;
-	
+
 	if (!*from)
 		return (0);
 	tmp = (*from)->next;
 	(*from)->next = *to;
 	*to = *from;
 	*from = tmp;
-	
 	return (1);
 }
 

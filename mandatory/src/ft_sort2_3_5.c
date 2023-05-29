@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_sort2_3_5.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mpalkov <mpalkov@student.42barcelo>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/29 14:46:13 by mpalkov           #+#    #+#             */
+/*   Updated: 2023/05/29 14:46:15 by mpalkov          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 int	ft_ps_handle2(t_node **stack, t_var *data)
@@ -31,7 +43,7 @@ int	ft_ps_sort3(t_node **stack, int order, t_var *data)
 		ft_ps_swap(stack, data);
 	else if ((*stack)->next->idx == key)
 		ft_ps_rrot(stack, data);
-	return(0);
+	return (0);
 }
 
 int	ft_ps_handle3(t_node **stack, t_var *data)

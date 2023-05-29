@@ -52,13 +52,13 @@ typedef struct s_node
 {
 	struct s_node	*next;
 	int				nbr;
-	UINT	idx;
+	UINT			idx;
 }				t_node;
 
 typedef struct s_var
 {
 	int				*sortedarray;
-	UINT	arrayln;
+	UINT			arrayln;
 	t_node			*sta;
 	t_node			*stb;
 	int				argc;
@@ -111,14 +111,14 @@ int		ft_ps_handle3(t_node **stack, t_var *data);
 int		ft_ps_handle5(t_node **stack, t_var *data);
 int		ft_ps_handle_many(t_node **stack, t_var *data);
 
-int	ft_ps_sortedcheck(t_node *start, UINT len, int order, t_var *data);
-int	ft_ps_initialize(int argc, char **argv, t_var *data);
-int	ft_ps_indexnodes(t_var *data);
+int		ft_ps_sortedcheck(t_node *start, UINT len, int order, t_var *data);
+int		ft_ps_initialize(int argc, char **argv, t_var *data);
+int		ft_ps_indexnodes(t_var *data);
 
 //arraysort
-int	ft_selection_sort(int *array, UINT len);
-int	ft_ps_numrepeats(int *array, UINT len, t_var *data);
-int	ft_fillarr(int *array, UINT len, char **str, t_var *data);
+int		ft_selection_sort(int *array, UINT len);
+int		ft_ps_numrepeats(int *array, UINT len, t_var *data);
+int		ft_fillarr(int *array, UINT len, char **str, t_var *data);
 t_node	**ft_ps_pushsel(t_node *from, t_var *data);
 
 #endif

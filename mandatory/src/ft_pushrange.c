@@ -28,11 +28,11 @@ int	ft_ps_pushidx(t_node **stack, unsigned int idx, t_var *data)
 			return (1);
 		}
 		else if ((ft_lst_getlast(*stack))->idx == idx)
-			{
-				ft_ps_rrot(stack, data);
-				ft_ps_push(stack, data);
-				return (1);
-			}
+		{
+			ft_ps_rrot(stack, data);
+			ft_ps_push(stack, data);
+			return (1);
+		}
 		else if ((*stack)->next)
 			ft_ps_rot(stack, data);
 		else if (!(*stack)->next)
@@ -43,9 +43,9 @@ int	ft_ps_pushidx(t_node **stack, unsigned int idx, t_var *data)
 
 void	ft_ps_pushrot(t_node **from, t_node **to, t_var *data)
 {
-		ft_ps_push(from, data);
-		ft_ps_rot(to, data);
-		return ;
+	ft_ps_push(from, data);
+	ft_ps_rot(to, data);
+	return ;
 }
 
 // helper function for pushrange

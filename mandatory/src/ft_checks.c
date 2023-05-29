@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_checks.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mpalkov <mpalkov@student.42barcelo>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/29 14:45:25 by mpalkov           #+#    #+#             */
+/*   Updated: 2023/05/29 14:45:28 by mpalkov          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 // CHECK IF NUM REPEATS WITHIN ISSORTED CHECK
-int	ft_ps_numrepeats(int *array, unsigned int len, t_var *data)
+int	ft_ps_numrepeats(int *array, UINT len, t_var *data)
 {
-	unsigned int	i;
-	unsigned int	j;
+	UINT	i;
+	UINT	j;
 
 	i = 0;
 	j = 1;
@@ -17,7 +29,7 @@ int	ft_ps_numrepeats(int *array, unsigned int len, t_var *data)
 				ft_ps_exit(data, INPUTERR);
 		}
 		++i;
-		j = i + 1;		
+		j = i + 1;
 	}
 	return (0);
 }
@@ -29,16 +41,16 @@ int	ft_ps_inorder(t_node *cur, int order)
 		return (1);
 	else if (order == DESCEND && cur->idx == cur->next->idx + 1)
 		return (1);
-	return(0);
+	return (0);
 }
 
 //ORDER 1 == ASCENDING	(WHEN SORTED IN STACK A)
 //ORDER 0 == DESCENDING	(WHEN SORTED IN STACK B)
 //len - length to check-sort from start
 //(start == 1, to compare start + 1 len == 2)
-int	ft_ps_sortedcheck(t_node *start, unsigned int len, int order, t_var *data)
+int	ft_ps_sortedcheck(t_node *start, UINT len, int order, t_var *data)
 {
-	unsigned int	i;
+	UINT	i;
 	t_node	*cur;
 	int		sorted;
 
@@ -83,8 +95,6 @@ int	ft_ps_digitchecks(char *str, int *i, int *j, int *sign)
 
 int	ft_ps_atoi(char *str, int *nbr, t_var *data)
 {
-	// char *str, int *nbr
-	// str[i + 1], array + i
 	int		i;
 	int		j;
 	int		sign;
@@ -96,7 +106,6 @@ int	ft_ps_atoi(char *str, int *nbr, t_var *data)
 	c = 0;
 	if (!str || !nbr)
 		ft_ps_exit(data, INPUTERR);
-		// ERROR - WRONG ATOI INPUT
 	if (ft_ps_digitchecks(str, &i, &j, &sign) == -1)
 		ft_ps_exit(data, INPUTERR);
 	while (--j >= 0)
@@ -105,6 +114,5 @@ int	ft_ps_atoi(char *str, int *nbr, t_var *data)
 	*nbr = (int)c;
 	if (c != *nbr)
 		ft_ps_exit(data, INPUTERR);
-		// ERROR - INPUT EXCEEDS INT LIMITS
 	return (1);
 }

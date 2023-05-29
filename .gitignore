@@ -2,3 +2,7 @@
 *.o
 libft.a
 push_swap
+Aitor_Checker
+checker_Mac
+utils/libft/TESTS_etc
+mandatory/pro_checker

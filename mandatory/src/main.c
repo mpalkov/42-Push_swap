@@ -15,12 +15,12 @@
 int	ft_ps_indexnodes(t_var *data)
 {
 	unsigned int	i;
-	int		*arr;
-	t_node	*tmp;
+	int				*arr;
+	t_node			*tmp;
 
 	i = 1;
 	arr = data->sortedarray;
-	while(i <= data->arrayln)
+	while (i <= data->arrayln)
 	{
 		tmp = NULL;
 		tmp = ft_ps_lstfind(data->sta, arr[i - 1]);
@@ -55,13 +55,6 @@ int	main(int argc, char **argv)
 		return (0);
 	ft_ps_initialize(argc, argv, &data);
 	ft_ps_sorting(&data);
-
-	if (ft_ps_sortedcheck(data.sta, 0, ASCEND, &data) == 1)
-		printf("SORTED OK\n");
-	else
-		printf("NOT SORTED\n");
-
-	//free everything
 	ft_ps_exit(&data, OK);
 	return (0);
 }

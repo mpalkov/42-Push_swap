@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_init_fns.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mpalkov <mpalkov@student.42barcelo>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/29 14:45:47 by mpalkov           #+#    #+#             */
+/*   Updated: 2023/05/29 14:45:49 by mpalkov          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 t_node	*ft_init_stack(t_var *data)
 {
 	t_node	*stack;
-	unsigned int	i;
-	
+	UINT	i;
+
 	i = 0;
 	stack = NULL;
 	while (i <= data->arrayln - 1)
@@ -40,10 +52,9 @@ int	ft_ps_data_null(t_var *data)
 	return (1);
 }
 
-
-int	ft_ps_issorted(int *array, unsigned int len, t_var *data)
+int	ft_ps_issorted(int *array, UINT len, t_var *data)
 {
-	unsigned int	i;
+	UINT	i;
 
 	i = 0;
 	while (i < len - 1)
