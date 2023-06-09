@@ -80,8 +80,6 @@ int	ft_ps_sort5(t_var *data)
 		++b;
 	}
 	ft_ps_handle3(&data->sta, data);
-	if (b == 2)
-		ft_ps_handle2(&data->sta, data);
 	while (b--)
 		ft_ps_push(&data->stb, data);
 	return (0);

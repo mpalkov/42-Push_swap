@@ -91,22 +91,21 @@ INCLUDE		:=	-I./utils/libft/ -I./utils/libft/includes/ -I./includes/
 
 all: make_libft $(NAME)
 
-# bonus: make_libft $(NAME_C_BNS) $(NAME_S_BNS)
-
 make_libft:
 	@echo "$(GREEN)	Calling Libft make $(DEFCOLOR)"
 	@$(MAKE) -C $(LIBFT_DIR)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $<
+	@$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $<
 	@echo "$(GREEN)	Compiling: $< -> $@ $(DEFCOLOR)"
 
 -include $(DEPS)
 
 $(NAME): $(OBJS) $(LIBFT)
 	@echo "$(GREEN)	Creating binary: $@ $(DEFCOLOR)"
-	$(CC) $(CFLAGS) $(INCLUDE) $(OBJS) -L$(LIBFT_DIR) -lft -o $@
+	@$(CC) $(CFLAGS) $(INCLUDE) $(OBJS) -L$(LIBFT_DIR) -lft -o $@
+	@echo "$(GREEN)	ALL DONE $(DEFCOLOR)"
 
 clean:
 	@echo "$(ORANGE)	Cleaning residual .o and .d files$(DEFCOLOR)"
