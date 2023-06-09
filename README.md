@@ -16,14 +16,17 @@ This project is about sorting data on a stack, with a limited set of instruction
 
 To see the complete instructions, read the [subject.pdf](https://github.com/mpalkov/42-Push_swap/blob/master/42_files/en.subject.pdf)
 
-[TOC]
+---
+https://github.com/mpalkov/42-Push_swap/assets/102831536/96e664d6-5edc-4670-b1e2-6d9fa4316a3d
 
-#Preliminary concepts:
-####Allowed stack-operations:
-![stack_operations.jpg](https://file.notion.so/f/s/5e2b4af7-4a80-4b29-8e22-6328a3418eb4/IMG_20230608_134941.jpg?id=bf4b8036-5c50-4b76-82ba-f2163ab5922a&table=block&spaceId=5953c84b-f0a5-456e-bc70-a724f388cae3&expirationTimestamp=1686311604401&signature=7XSDMat09DCkToa8ltSuKNmIimH2C4I3OnqgNMQFpCg&downloadName=IMG_20230608_134941.jpg)
+
+# Preliminary concepts:
+#### Allowed stack-operations:
+![Stack_operations](https://github.com/mpalkov/42-Push_swap/assets/102831536/85ad5d22-915b-4845-a281-1aecd545a469)
+
 
 ---
-####Each stack node contains these variables:
+#### Each stack node contains these variables:
 
 `*next` - next node in the linked list
 `nbr` - the actual number value
@@ -41,9 +44,11 @@ To see the complete instructions, read the [subject.pdf](https://github.com/mpal
 Then there is the `t_var` structure with general control variables, where is, for example `stack_a` and `stack_b` pointer, `errno` to check which error (if) just happend, and more.
 
 ---
-####Chunks
+#### Chunks
 -- When sorting more than 5 numbers, the most optimal approach is to split the stack to various `chunks` of numbers. These numbers in a chunk should be adjacent (when stack is sorted). Like this, you will have stack_b half-way sorted, and you will not need to do too many unnecessary operations to get to the highest overall number when pushing from stack_b to stack_a, because it will be somewhere near very-top or very-bottom of the stack_b.
-![chunks_b](https://file.134941.jpg)
+
+<img width="299" alt="stack_b - chunks" src="https://github.com/mpalkov/42-Push_swap/assets/102831536/2b8700b4-9111-4b2d-a04a-ddda82aad2aa">
+
 
 #### select_stack function (`ft_ps_stacksel`)
 -- I wanted to create the most versatile and modular functions, so I have created the ft_ps_stacksel to determine which stack am i working with (which stack is sent to the current function).
@@ -63,17 +68,20 @@ Then there is the `t_var` structure with general control variables, where is, fo
 ## The actual sorting algorithms
 ### sort_2
 -- there is really only 2 options, sorted or swap if not sorted.
-###sort_3
+
+### sort_3
 -- While the stack is not sorted do:
 -- search for the biggest number of the three.
 -- If it is on top, `rotate` stack
 -- if it is the last, `swap` stack
 -- if it is in the middle `reverse rotate` stack.
 -- evaluate the while condition again.
+
 ### sort_5 (and 4)
 -- while stack a has more than 3 numbers, search for the lowest number in the stack_a and push it to stack_b
 -- apply sort_3 to the three numbers left in stack_a
 -- push everything from stack_b to stack_a in its actual order.
+
 ### sort_many (for everything over 5 numbers)
 -- first, find the number with the lowest index in stack_a
 -- while stack_a contains more than three numbres, do the following:
@@ -92,7 +100,5 @@ important to execute in bash
 -- execute push_swap and checker with new random set of numbers from 0 to 500 every time the line gets executed:
 `ARG=$(ruby -e "puts (0..500).to_a.shuffle.join(' ')"); ./push_swap $ARG | ./pro_checker $ARG`
 
-##enum
+## enum
 https://www.geeksforgeeks.org/enumeration-enum-c/
-
---
